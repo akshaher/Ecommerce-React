@@ -222,45 +222,6 @@ app.get("/products/:id", verifyToken, async (req, res) => {
   }, 1000);
 });
 
-app.post("/products", async (req, res) => {
-  const { product } = req.body;
-
-  if (!product) {
-    return res.status(400).json({
-      message: "product is required",
-    });
-  }
-
-  if (
-    !product.title?.trim() ||
-    !product.description?.trim() ||
-    !product.date?.trim() ||
-    !product.time?.trim() ||
-    !product.image?.trim() ||
-    !product.location?.trim()
-  ) {
-    return res.status(400).json({
-      message: "Invalid data provided.",
-    });
-  }
-
-  const eventsFileContent = await fs.readFile("./data/products.json");
-
-  const products = JSON.parse(eventsFileContent);
-
-  const newEvent = {
-    id: Math.round(Math.random() * 10000).toString(),
-
-    ...product,
-  };
-
-  products.push(newEvent);
-
-  await fs.writeFile("./data/products.json", JSON.stringify(products));
-
-  res.json({ product: newEvent });
-});
-
 /* ===================================================
    FAVORITES ROUTES  (user-specific, JWT protected)
    Persists to ./data/favorites.json
