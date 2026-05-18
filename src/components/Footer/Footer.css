@@ -1,0 +1,31 @@
+.footer {
+  background: #0f172a;
+  color: white;
+  padding: 80px;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.newsletter {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.newsletter input {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+.newsletter button {
+  background: #ff6b35;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+}

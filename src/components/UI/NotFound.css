@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ── Main wrapper ──────────────────────────────────────────────────────────── */
+.nf-main {
+  min-height: 100dvh;
+  background: #0a0c10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 32px;
+  font-family: 'DM Sans', sans-serif;
+  color: #f0f2f8;
+}
+
+/* ── Inner container ───────────────────────────────────────────────────────── */
+.nf-container {
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* ── Two-column grid ───────────────────────────────────────────────────────── */
+.nf-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .nf-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    text-align: center;
+  }
+}
+
+/* ── Left: text ────────────────────────────────────────────────────────────── */
+.nf-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #e05a2b;
+  margin-bottom: 14px;
+}
+
+.nf-heading {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin-bottom: 18px;
+}
+
+.nf-accent {
+  color: #e05a2b;
+}
+
+.nf-desc {
+  font-size: 15px;
+  color: #9aa0b8;
+  line-height: 1.7;
+  margin-bottom: 32px;
+  max-width: 440px;
+}
+
+@media (max-width: 768px) {
+  .nf-desc { margin-inline: auto; }
+}
+
+/* ── Buttons ───────────────────────────────────────────────────────────────── */
+.nf-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  .nf-actions { justify-content: center; }
+}
+
+.nf-btn-primary,
+.nf-btn-secondary {
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nf-btn-primary {
+  background: #e05a2b;
+  color: #fff;
+  border: none;
+}
+
+.nf-btn-primary:hover {
+  background: #ff7a4a;
+  transform: translateY(-1px);
+}
+
+.nf-btn-secondary {
+  background: transparent;
+  color: #f0f2f8;
+  border: 1.5px solid #2a2f45;
+}
+
+.nf-btn-secondary:hover {
+  border-color: #4a5070;
+  background: #1e2130;
+}
+
+/* ── Shortcuts ─────────────────────────────────────────────────────────────── */
+.nf-shortcuts {
+  padding-top: 32px;
+  border-top: 1px solid #1e2130;
+}
+
+.nf-shortcuts-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #4a5070;
+  margin-bottom: 14px;
+}
+
+.nf-shortcuts-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .nf-shortcuts-list { justify-content: center; }
+}
+
+.nf-shortcut-link {
+  font-size: 14px;
+  color: #9aa0b8;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s;
+}
+
+.nf-shortcut-link:hover {
+  color: #e05a2b;
+}
+
+/* ── Right: visual card ────────────────────────────────────────────────────── */
+.nf-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nf-card {
+  position: relative;
+  background: #161921;
+  border: 1px solid #2a2f45;
+  border-radius: 24px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 340px;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Background glow */
+.nf-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 60% 40%, rgba(224, 90, 43, 0.12), transparent 70%);
+  pointer-events: none;
+}
+
+/* 404 watermark */
+.nf-watermark {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  font-family: 'Syne', sans-serif;
+  font-size: 100px;
+  font-weight: 800;
+  color: #fff;
+  opacity: 0.04;
+  line-height: 1;
+  user-select: none;
+  letter-spacing: -0.04em;
+}
+
+/* Cart icon */
+.nf-icon-wrap {
+  position: relative;
+  z-index: 1;
+  width: 80px;
+  height: 80px;
+  background: rgba(224, 90, 43, 0.12);
+  border: 1px solid rgba(224, 90, 43, 0.25);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.nf-icon {
+  font-size: 36px;
+}
+
+.nf-card-text {
+  position: relative;
+  z-index: 1;
+  font-size: 13px;
+  color: #5a6080;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}

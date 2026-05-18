@@ -1,0 +1,32 @@
+.all-products-page {
+  padding: 24px 20px;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+/* Page Title */
+.all-products-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+}
+
+/* Optional subtitle */
+.all-products-subtitle {
+  font-size: 14px;
+  color: #0b62e0;
+  margin-bottom: 30px;
+}
+
+/* Each category wrapper spacing */
+.category-wrapper {
+  margin-bottom: 50px;
+}
+
+/* Section divider (subtle separation) */
+.category-wrapper + .category-wrapper {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 30px;
+}

@@ -1,0 +1,196 @@
+/* ── Sticky Category Header ───────────────────────────── */
+.category-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(10, 12, 16, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border-bottom: 1px solid #1e2130;
+
+  padding: 10px 32px;
+}
+
+/* LEFT SIDE (filters) */
+.category-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Label */
+.category-bar-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #4a5070;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* Pills container */
+.category-bar-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.category-bar-inner::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Right side actions ───────────────────────────── */
+.navTabs {
+  display: flex;
+  align-items: center;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Cart slot */
+.nav-cart-slot {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  background: #111318;
+  border: 1px solid #1e2130;
+}
+
+/* Logout button */
+.plp-logout-btn {
+  height: 36px;
+  padding: 0 14px;
+
+  border-radius: 8px;
+  border: 1px solid #1e2130;
+  background: transparent;
+
+  color: #9aa0b8;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.plp-logout-btn:hover {
+  border-color: #4a5070;
+  color: #f0f2f8;
+}
+
+/* ── Category Pills (unchanged but kept clean) ───────── */
+.category-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1.5px solid #1e2130;
+  background: transparent;
+  color: #9aa0b8;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.2s;
+}
+
+.category-pill:hover {
+  border-color: #4a5070;
+  color: #f0f2f8;
+}
+
+.category-pill.active {
+  border-color: #e05a2b;
+  background: rgba(224, 90, 43, 0.12);
+  color: #ff7a4a;
+}
+
+.category-pill input {
+  display: none;
+}
+
+.category-icon {
+  font-size: 15px;
+}
+
+/* VIEW ALL PRODUCTS BUTTON */
+.view-all-products-btn {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: fit-content;
+
+  margin: 50px auto 20px;
+
+  padding: 16px 34px;
+
+  background: linear-gradient(
+    135deg,
+    #0f172a,
+    #1e293b
+  );
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 10px 25px rgba(15, 23, 42, 0.12),
+    0 4px 10px rgba(15, 23, 42, 0.08);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+/* HOVER */
+.view-all-products-btn:hover {
+  transform: translateY(-3px);
+
+  background: linear-gradient(
+    135deg,
+    #ff6b35,
+    #ff8c5a
+  );
+
+  box-shadow:
+    0 14px 30px rgba(255, 107, 53, 0.25),
+    0 8px 16px rgba(255, 107, 53, 0.12);
+}
+
+/* ACTIVE */
+.view-all-products-btn:active {
+  transform: scale(0.98);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .view-all-products-btn {
+    width: 90%;
+
+    padding: 15px 20px;
+
+    font-size: 15px;
+  }
+}

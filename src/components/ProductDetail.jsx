@@ -1,0 +1,216 @@
+import { useState, useOptimistic, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../Pages/cartStore";
+import "./ProductDetail.css";
+
+const IMAGE_BASE_URL = "http://localhost:5000/";
+
+const TRUST_BADGES = [
+  { icon: "🚚", label: "Free delivery" },
+  { icon: "🛡", label: "2-year warranty" },
+  { icon: "↩", label: "30-day returns" },
+  { icon: "🔒", label: "Secure checkout" },
+];
+
+export default function ProductDetail({ data }) {
+//   To dispatch the reducer action for AddToCart
+    const dispatch = useDispatch();
+
+//   
+  const [heroIdx, setHeroIdx] = useState(0);
+
+//   To handle the "Add To Cart" button state
+  const [added, setAdded] = useState(false);
+
+  /* ─────────────────────────────────────────────
+       SAFE INITIAL STATE
+    ───────────────────────────────────────────── */
+
+  const [favorite, setFavorite] = useState(data?.isFavorite || false);
+
+  const [optimisticFavorite, toggleFavorite] = useOptimistic(
+    favorite,
+    (current) => !current,
+  );
+
+  /* ─────────────────────────────────────────────
+       FETCH FAVORITE STATUS WHEN PAGE LOADS
+    ───────────────────────────────────────────── */
+//  To get the isFavorite state from server to ad the symbol accordingly else will fall in error.
+//  When product Id gets changed then it will call the GET method
+  useEffect(() => {
+    if (!data?.id) return;
+
+    async function loadFavorites() {
+      const token = localStorage.getItem("token");
+
+      try {
+        const res = await fetch(`${IMAGE_BASE_URL}products/favorites`, {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch favorites");
+        }
+
+        const result = await res.json();
+        console.log(result);
+
+        /*
+                  result.favorites example:
+                  ["p2", "p3"]
+                */
+
+        const isFav = result.favorites.includes(data.id);
+
+        setFavorite(isFav);
+      } catch (err) {
+        console.log("Failed to load favorites:", err);
+      }
+    }
+
+    loadFavorites();
+  }, [data?.id]);
+
+  /* ─────────────────────────────────────────────
+       CONDITIONAL RETURN
+    ───────────────────────────────────────────── */
+
+  if (!data) return null;
+
+  const { id, title, price, description, badge, images = [] } = data;
+
+  const imageUrls = images.map((src) => `${IMAGE_BASE_URL}${src}`);
+
+  /* ─────────────────────────────────────────────
+       ADD TO CART
+    ───────────────────────────────────────────── */
+
+  function handleAddToCart() {
+    if (added) return;
+
+    dispatch(
+      addToCart({
+        id,
+        title,
+        price,
+        image: imageUrls[0],
+      }),
+    );
+    setAdded(true);
+  }
+
+
+  async function handleFavorite() {
+    toggleFavorite();
+
+    const token = localStorage.getItem("token");
+    try {
+      const res = await fetch(`${IMAGE_BASE_URL}products/favorites`, {
+        method: "POST",
+
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          productId: id,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Favorite update failed");
+      }
+
+      const result = await res.json();
+
+      /*
+              Sync REAL backend state
+            */
+
+      setFavorite(result.isFavorite);
+    } catch (err) {
+      console.log("Favorite update failed:", err);
+
+      /*
+              Rollback if API fails
+            */
+
+      setFavorite((prev) => !prev);
+    }
+  }
+
+  return (
+    <article className="pd-root" id="product-details">
+      <div className="pd-layout">
+        {/* IMAGE */}
+        <div className="pd-img-wrap">
+          <div className="pd-hero-wrap">
+            {imageUrls[heroIdx] && (
+              <img
+                className="pd-main-img"
+                src={imageUrls[heroIdx]}
+                alt={title}
+              />
+            )}
+
+            {badge && <div className="pd-new-badge">{badge}</div>}
+          </div>
+
+          {imageUrls.length > 1 && (
+            <div className="pd-thumbs">
+              {imageUrls.map((src, i) => (
+                <div
+                  key={i}
+                  className={`pd-thumb ${heroIdx === i ? "active" : ""}`}
+                  onClick={() => setHeroIdx(i)}
+                >
+                  <img src={src} alt={`${title} view ${i + 1}`} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* INFO */}
+        <div className="pd-info">
+          <button
+            className={`pd-fav-btn ${optimisticFavorite ? "active" : ""}`}
+            onClick={handleFavorite}
+          >
+            {optimisticFavorite ? "❤️" : "🤍"}
+          </button>
+
+          {badge && <div className="pd-badge">{badge}</div>}
+
+          <h1 className="pd-title">{title}</h1>
+
+          <div className="pd-price">${price}</div>
+
+          <p className="pd-desc">{description}</p>
+
+          <button
+            className={`pd-btn-cart ${added ? "added" : "idle"}`}
+            onClick={handleAddToCart}
+          >
+            {added ? "✓ Added to Cart" : "Add to Cart"}
+          </button>
+
+          <div className="pd-badges">
+            {TRUST_BADGES.map((b, i) => (
+              <div key={i} className="pd-trust">
+                <span className="pd-trust-icon">{b.icon}</span>
+
+                <span className="pd-trust-txt">{b.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}

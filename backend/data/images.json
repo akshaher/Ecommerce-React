@@ -1,0 +1,30 @@
+[
+  {
+    "path": "macbook-pro.jpg",
+    "caption": "Apple MacBook Pro laptop placed on a modern workspace desk."
+  },
+  {
+    "path": "samsung-s24.webp",
+    "caption": "Samsung Galaxy S24 Ultra smartphone showcasing its premium display."
+  },
+  {
+    "path": "sony-headphones.webp",
+    "caption": "Sony wireless noise-cancelling headphones with modern design."
+  },
+  {
+    "path": "dell-xps.png",
+    "caption": "Dell XPS 15 laptop opened on a professional office table."
+  },
+  {
+    "path": "oneplus-12.jpg",
+    "caption": "OnePlus 12 smartphone displaying a vibrant AMOLED screen."
+  },
+  {
+    "path": "duracell-batteries.png",
+    "caption": "Pack of Duracell AA batteries for everyday electronic devices."
+  },
+  {
+    "path": "iphone-15-pro.webp",
+    "caption": "Apple iPhone 15 Pro with titanium finish and advanced camera setup."
+  }
+]

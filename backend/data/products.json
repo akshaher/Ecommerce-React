@@ -1,0 +1,257 @@
+[
+  {
+    "id": "p1",
+    "title": "MacBook Pro M3",
+    "badge": "New Arrival",
+    "price": 2499,
+    "category": "laptops",
+    "description": "Powerful Apple laptop with M3 chip, Retina display, and all-day battery life for professionals.",
+    "images": [
+      "macbook-pro1.jpg",
+      "macbook-pro2.jpg",
+      "macbook-pro3.jpg",
+      "macbook-pro4.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p2",
+    "title": "Samsung Galaxy S24 Ultra",
+    "badge": "Trending",
+    "price": 1399,
+    "category": "smartphones",
+    "description": "Premium Android smartphone with advanced camera system, AMOLED display, and AI-powered features.",
+    "images": [
+      "samsung-s241.jpg",
+      "samsung-s242.jpg",
+      "samsung-s243.jpg",
+      "samsung-s244.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p3",
+    "title": "Sony Wireless Headphones",
+    "badge": "Best Seller",
+    "price": 399,
+    "category": "headphones",
+    "description": "Noise-cancelling wireless headphones with immersive sound quality and long-lasting comfort.",
+    "images": [
+      "sony-headphones1.jpg",
+      "sony-headphones2.jpg",
+      "sony-headphones3.jpg",
+      "sony-headphones4.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p4",
+    "title": "Dell XPS 15 Laptop",
+    "badge": "Professional Choice",
+    "price": 2199,
+    "category": "laptops",
+    "description": "High-performance laptop designed for developers, creators, and multitasking professionals.",
+    "images": [
+      "dell-xps1.jpg",
+      "dell-xps2.jpg",
+      "dell-xps3.jpg",
+      "dell-xps4.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p5",
+    "title": "OnePlus 12 Smartphone",
+    "badge": "Hot Deal",
+    "category": "smartphones",
+    "price": 999,
+    "description": "Flagship smartphone with fast charging, smooth performance, and premium camera capabilities.",
+    "images": [
+      "oneplus-121.webp",
+      "oneplus-122.jpg",
+      "oneplus-123.jpg",
+      "oneplus-124.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p6",
+    "title": "Titan Elite Smartwatch",
+    "badge": "Top Rated",
+    "price": 249,
+    "category": "watches",
+    "description": "Premium smartwatch with AMOLED display, heart-rate monitoring, fitness tracking, and long-lasting battery life for everyday performance.",
+    "images": [
+      "img1.webp",
+      "img2.webp",
+      "img3.jpg",
+      "img4.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p7",
+    "title": "Apple iPhone 15 Pro",
+    "badge": "Premium",
+    "price": 1599,
+    "category": "smartphones",
+    "description": "Latest iPhone with titanium design, powerful performance, and advanced camera technology.",
+    "images": [
+      "iphone-15-pro1.jpg",
+      "iphone-15-pro2.jpg",
+      "iphone-15-pro3.jpg",
+      "iphone-15-pro4.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p8",
+    "title": "HP Spectre x360",
+    "badge": "Editor Choice",
+    "price": 1899,
+    "category": "laptops",
+    "description": "Convertible premium laptop with touchscreen display, Intel Core Ultra processor, and ultra-slim aluminum design.",
+    "images": [
+      "hp-spectre1.jpg",
+      "hp-spectre2.jpg",
+      "hp-spectre3.jpg",
+      "hp-spectre4.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p9",
+    "title": "Google Pixel 9 Pro",
+    "badge": "AI Powered",
+    "price": 1299,
+    "category": "smartphones",
+    "description": "Google flagship smartphone featuring advanced AI photography, smooth Android experience, and all-day battery life.",
+    "images": [
+      "pixel-91.webp",
+      "pixel-92.jpg",
+      "pixel-93.jpg",
+      "pixel-94.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p10",
+    "title": "Bose QuietComfort Ultra",
+    "badge": "Top Pick",
+    "price": 449,
+    "category": "headphones",
+    "description": "Premium wireless headphones with world-class noise cancellation and immersive spatial audio experience.",
+    "images": [
+      "bose-qc1.jpg",
+      "bose-qc2.jpg",
+      "bose-qc3.jpg",
+      "bose-qc4.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p11",
+    "title": "Lenovo Legion Pro 7",
+    "badge": "Gaming Beast",
+    "price": 2599,
+    "category": "laptops",
+    "description": "High-end gaming laptop with RTX graphics, advanced cooling system, and ultra-fast refresh rate display.",
+    "images": [
+      "legion-pro1.webp",
+      "legion-pro2.webp",
+      "legion-pro3.jpg",
+      "legion-pro4.webp"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p12",
+    "title": "Nothing Phone 3",
+    "badge": "Unique Design",
+    "price": 899,
+    "category": "smartphones",
+    "description": "Minimalist Android smartphone with transparent design, Glyph interface, and optimized user experience.",
+    "images": [
+      "nothing-phone1.webp",
+      "nothing-phone2.jpg",
+      "nothing-phone3.jpg",
+      "nothing-phone4.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p13",
+    "title": "Fossil Gen 7 Smartwatch",
+    "badge": "Lifestyle",
+    "price": 329,
+    "category": "watches",
+    "description": "Stylish smartwatch with fitness tracking, AMOLED display, Google Wear OS, and smart notifications support.",
+    "images": [
+      "fossil-watch1.jpg",
+      "fossil-watch2.jpg",
+      "fossil-watch3.jpg",
+      "fossil-watch4.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p14",
+    "title": "Asus ROG Zephyrus G16",
+    "badge": "Performance",
+    "price": 2299,
+    "category": "laptops",
+    "description": "Ultra-powerful gaming and creator laptop with OLED display, RTX graphics, and premium lightweight design.",
+    "images": [
+      "rog-g161.jpg",
+      "rog-g162.jpg",
+      "rog-g163.jpg",
+      "rog-g164.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p15",
+    "title": "JBL Live Beam Earbuds",
+    "badge": "Compact Audio",
+    "price": 199,
+    "category": "headphones",
+    "description": "True wireless earbuds with deep bass, adaptive noise cancelling, and crystal-clear voice calls.",
+    "images": [
+      "jbl-beam1.jpg",
+      "jbl-beam2.jpg",
+      "jbl-beam3.jpg",
+      "jbl-beam4.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p16",
+    "title": "Garmin Forerunner 965",
+    "badge": "Fitness Pro",
+    "price": 599,
+    "category": "watches",
+    "description": "Advanced fitness smartwatch with GPS tracking, health monitoring, and professional sports analytics.",
+    "images": [
+      "garmin-9651.jpg",
+      "garmin-9652.jpg",
+      "garmin-9653.jpg",
+      "garmin-9654.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "p17",
+    "title": "Xiaomi 15 Ultra",
+    "badge": "Camera King",
+    "price": 1199,
+    "category": "smartphones",
+    "description": "Flagship smartphone with Leica-powered cameras, ultra-fast charging, and premium curved AMOLED display.",
+    "images": [
+      "xiaomi-151.jpg",
+      "xiaomi-152.jpg",
+      "xiaomi-153.jpg",
+      "xiaomi-154.jpg"
+    ],
+    "isFavorite": false
+  }
+]

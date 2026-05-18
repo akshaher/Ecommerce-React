@@ -1,0 +1,76 @@
+import {
+  Link,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
+
+import Header from "../Header.jsx";
+
+import {  useQuery } from "@tanstack/react-query";
+import { fetchEvent } from "../../util/http.js";
+import ProductDetail from "../ProductDetail.jsx";
+import CartIcon from "../CartIcon.jsx";
+import LoadingIndicator from "../UI/LoadingIndicator.jsx";
+import ErrorBlock from "../UI/ErrorBlock.jsx";
+
+export default function ProductDetails() {
+
+  const { id } = useParams();
+  const navigate=useNavigate();
+
+  const { data, isPending, isError, error } = useQuery({
+    queryKey: ["event", { id: id }],
+    queryFn: ({ signal }) => fetchEvent({ signal, id }),
+  });
+
+  function navigateToLogin() {
+    localStorage.removeItem('token');
+    navigate('/login');
+  }
+
+  let content;
+
+
+  if (isPending){
+   content= <div className="plp-state">
+    <LoadingIndicator/>
+   </div>
+  }
+
+  if(isError && error.code === 401){    
+    content=(
+      <div className="error-box auth-error">
+        <h2 className="error-title">Session Expired</h2>
+        <p className="error-message">{error.message}</p>
+        <a onClick={navigateToLogin} className="error-link">Click here to login again</a>
+      </div>
+    )}else if (isError){
+      content = (
+        <div className="plp-state">
+          <ErrorBlock title="An error occured"
+          message={error.message || "Failed to Fetch"}
+          />
+        </div>
+      )
+    } 
+
+    if(data){
+      content = <ProductDetail data={data}/>
+    }
+  
+
+
+  return (
+    <>
+      <Header>
+        <Link to="/products" className="button">
+          View all Products
+        </Link>
+        <CartIcon />
+      </Header>
+
+      {/* <ProductDetail data={data} /> */}
+      {content}
+    </>
+  );
+}

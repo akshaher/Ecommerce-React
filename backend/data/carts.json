@@ -1,0 +1,61 @@
+{
+  "aa@bts.com": {
+    "items": [
+      {
+        "id": "p3",
+        "title": "Sony Wireless Headphones",
+        "price": 399,
+        "image": "http://localhost:5000/sony-headphones1.jpg",
+        "qty": 1
+      },
+      {
+        "id": "p6",
+        "title": "Titan Elite Smartwatch",
+        "price": 249,
+        "image": "http://localhost:5000/img1.webp",
+        "qty": 1
+      },
+      {
+        "id": "p2",
+        "title": "Samsung Galaxy S24 Ultra",
+        "price": 1399,
+        "image": "http://localhost:5000/samsung-s241.jpg",
+        "qty": 2
+      },
+      {
+        "id": "p4",
+        "title": "Dell XPS 15 Laptop",
+        "price": 2199,
+        "image": "http://localhost:5000/dell-xps1.jpg",
+        "qty": 1
+      },
+      {
+        "id": "p17",
+        "title": "Xiaomi 15 Ultra",
+        "price": 1199,
+        "image": "http://localhost:5000/xiaomi-151.jpg",
+        "qty": 1
+      },
+      {
+        "id": "p10",
+        "title": "Bose QuietComfort Ultra",
+        "price": 449,
+        "image": "http://localhost:5000/bose-qc1.jpg",
+        "qty": 1
+      }
+    ],
+    "count": 7
+  },
+  "akshay@bts.com": {
+    "items": [
+      {
+        "id": "p1",
+        "title": "MacBook Pro M3",
+        "price": 2499,
+        "image": "http://localhost:5000/macbook-pro1.jpg",
+        "qty": 1
+      }
+    ],
+    "count": 1
+  }
+}

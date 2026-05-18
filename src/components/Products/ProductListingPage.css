@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+/* ── Variables ─────────────────────────────────────────────────────────────── */
+:root {
+  --plp-bg:        #0a0c10;
+  --plp-surface:   #111318;
+  --plp-border:    #1e2130;
+  --plp-accent:    #e05a2b;
+  --plp-accent2:   #ff7a4a;
+  --plp-txt:       #f0f2f8;
+  --plp-txt2:      #9aa0b8;
+  --plp-txt3:      #4a5070;
+  --plp-nav-h:     68px;
+}
+
+/* ── Page Shell ────────────────────────────────────────────────────────────── */
+.plp-section {
+  min-height: 100dvh;
+  background: var(--plp-bg);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--plp-txt);
+}
+
+/* ── Navbar ────────────────────────────────────────────────────────────────── */
+/*
+  backdrop-filter is intentionally on ::before, NOT on .plp-nav directly.
+  Applying it on the element itself creates a new stacking context which
+  breaks position:fixed children (CartModal) — they anchor to the nav
+  instead of the viewport, making the panel appear centered instead of
+  sliding in from the right edge.
+*/
+.plp-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--plp-nav-h);
+  border-bottom: 1px solid var(--plp-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+}
+
+/* Blurred bg on pseudo-element — does NOT create a stacking context */
+.plp-nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 12, 16, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: -1;
+}
+
+/* Brand wordmark */
+.plp-brand {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--plp-txt);
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.plp-brand-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--plp-accent);
+  display: inline-block;
+}
+
+/* Nav right cluster */
+.plp-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Cart icon slot — gives the CartIcon a visible home */
+.plp-cart-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--plp-surface);
+  border: 1px solid var(--plp-border);
+  color: var(--plp-txt);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.plp-cart-slot:hover {
+  border-color: var(--plp-accent);
+  background: rgba(224, 90, 43, 0.08);
+}
+
+/* Logout button */
+.plp-logout-btn {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: 1px solid var(--plp-border);
+  background: transparent;
+  color: var(--plp-txt2);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.plp-logout-btn:hover {
+  border-color: var(--plp-txt3);
+  color: var(--plp-txt);
+}
+
+/* ── Page Body ─────────────────────────────────────────────────────────────── */
+.plp-body {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px 32px 80px;
+}
+
+/* ── Section heading ───────────────────────────────────────────────────────── */
+.plp-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--plp-border);
+}
+
+.plp-heading-left {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.plp-heading {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 800;
+  color: var(--plp-txt);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.plp-heading span {
+  color: var(--plp-accent);
+}
+
+.plp-item-count {
+  font-size: 13px;
+  color: var(--plp-txt3);
+  font-weight: 400;
+  padding-bottom: 4px;
+}
+
+/* ── Product Grid ──────────────────────────────────────────────────────────── */
+.plp-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* ── States ────────────────────────────────────────────────────────────────── */
+.plp-state {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+}
+
+/* ── Empty state ───────────────────────────────────────────────────────────── */
+.plp-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  gap: 14px;
+  color: var(--plp-txt3);
+}
+
+.plp-empty-icon {
+  font-size: 48px;
+}
+
+.plp-empty p {
+  font-size: 15px;
+}

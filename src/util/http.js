@@ -1,0 +1,68 @@
+import { QueryClient } from '@tanstack/react-query';
+
+export const queryClient = new QueryClient();
+export async function fetchEvents({ signal, searchTerm, category }) {
+ 
+   let url = "http://localhost:5000/products";
+
+  if (searchTerm) {
+    url = url + "?search=" + searchTerm;
+  } else if (category && category !== "all") {
+    url = url + "?category=" + category;
+  }
+
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(url, {
+    signal,
+    headers: {
+      Authorization: token ? `Bearer ${token}` : "",
+    },
+  });
+
+  // ✅ Handle authentication errors separately
+  if (response.status === 401) {
+    const error = new Error("SESSION_EXPIRED");
+    error.code = 401;
+    error.message = "Your session has expired. Please login again.";
+    error.redirectTo = "/login";
+    throw error;
+  }
+
+  // ✅ Other errors
+  if (!response.ok) {
+    const error = new Error("FETCH_ERROR");
+    error.code = response.status;
+    error.info = await response.json();
+    throw error;
+  }
+
+  const { events } = await response.json();
+  return events;
+}
+
+
+
+export async function fetchEvent({ id, signal }) {
+  const token = localStorage.getItem("token");
+  let url= "http://localhost:5000/products/";
+
+  const response = await fetch(url+ `${id}`, { signal ,headers: {
+      Authorization: token ? `Bearer ${token}` : "",
+    } });
+
+  if (!response.ok) {
+    const error = new Error('An error occurred while fetching the event');
+    error.code = response.status;
+    error.message = `No Product has been found with ID: ${id}`;
+    error.info = await response.json();
+    console.log(error, response);
+    
+    throw error;
+  }
+
+  const { event } = await response.json();
+
+  return event;
+}
+
