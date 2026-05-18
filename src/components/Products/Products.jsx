@@ -10,10 +10,10 @@ import { useTranslation } from "react-i18next";
 
 const CATEGORIES = [
   { value: "all", label: "categories.all", icon: "🛍" },
-  { value: "smartphones", label: "Smartphones", icon: "📱" },
-  { value: "laptops", label: "Laptops", icon: "💻" },
-  { value: "headphones", label: "Headphones", icon: "🎧" },
-  { value: "watches", label: "Watches", icon: "⌚" },
+  { value: "smartphones", label: "categories.smartphones", icon: "📱" },
+  { value: "laptops", label: "categories.laptops", icon: "💻" },
+  { value: "headphones", label: "categories.headphones", icon: "🎧" },
+  { value: "watches", label: "categories.watches", icon: "⌚" },
 ];
 
 export default function Products() {
@@ -29,10 +29,8 @@ export default function Products() {
       />
       <main>
         <div className="category-bar">
-          {/* LEFT: Filters */}
           <div className="category-left">
-            <span className="category-bar-label">Filter by category:</span>
-
+            <span className="category-bar-label">{t("filter")}</span>
             <div className="category-bar-inner">
               {CATEGORIES.map((cat) => (
                 <label
@@ -64,9 +62,8 @@ export default function Products() {
                   setShowLogoutModal("true");
                 }}
               >
-                Log out
+                {t("logOut")}
               </button>
-
               <div className="nav-cart-slot">
                 <CartIcon />
               </div>

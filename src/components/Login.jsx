@@ -8,6 +8,8 @@ const BASE_URL = "http://localhost:5000/";
 function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -30,7 +32,6 @@ function Login() {
     e.preventDefault();
 
     setErrorMessage("");
-
     const url = isLogin ? BASE_URL + "login" : BASE_URL + "signup";
 
     try {
@@ -43,28 +44,23 @@ function Login() {
       });
 
       const data = await response.json();
+      
 
-      // 👇 Handle backend errors
       if (!response.ok) {
         setErrorMessage(
           data.message || "Something went wrong. Please try again.",
         );
         return;
       }
-
       localStorage.setItem("token", data.token);
-
       await fetchUserCart();
-
       navigate("/products");
     } catch (error) {
       console.log(error);
-
       setErrorMessage("Unable to connect to server. Please try again later.");
     }
   }
 
-  /* Redirect if already logged in */
   if (token) {
     return <Navigate to="/products" replace />;
   }
@@ -90,16 +86,26 @@ function Login() {
             required
           />
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
+          <div className="password-container">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="password-input"
+            />
 
-          {/* 👇 Inline Error Message */}
+            <button
+              type="button"
+              className="toggle-btn"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
+
           {errorMessage && (
             <div className="auth-error-message">{errorMessage}</div>
           )}

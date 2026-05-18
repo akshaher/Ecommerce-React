@@ -5,7 +5,6 @@ import {
 } from "react-router-dom";
 
 import Header from "../Header.jsx";
-
 import {  useQuery } from "@tanstack/react-query";
 import { fetchEvent } from "../../util/http.js";
 import ProductDetail from "../ProductDetail.jsx";
@@ -19,8 +18,8 @@ export default function ProductDetails() {
   const navigate=useNavigate();
 
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ["event", { id: id }],
-    queryFn: ({ signal }) => fetchEvent({ signal, id }),
+    queryKey: ["product", { id: id }],
+    queryFn: () => fetchEvent({ id }),
   });
 
   function navigateToLogin() {

@@ -6,7 +6,7 @@ import "./CartIcon.css";
 export default function CartIcon() {
   const count = useSelector((state) => state.cart.count);
   const [open, setOpen]  = useState(false);
-
+  
   return (
     <>
       <button
@@ -39,7 +39,7 @@ export default function CartIcon() {
         )}
       </button>
 
-      {/* Modal — mounts when open */}
+
       {open && <CartModal onClose={() => setOpen(false)} />}
     </>
   );

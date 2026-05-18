@@ -15,13 +15,8 @@ export default function CartModal({ onClose }) {
   // position:fixed — the panel always anchors to the true viewport edge.
   return createPortal(
     <>
-      {/* ── Backdrop ─────────────────────────────────────────────────────── */}
       <div className="cm-backdrop" onClick={onClose} />
-
-      {/* ── Modal Panel ──────────────────────────────────────────────────── */}
       <div className="cm-panel" role="dialog" aria-modal="true" aria-label="Your cart">
-
-        {/* Header */}
         <div className="cm-header">
           <div className="cm-header-left">
             <span className="cm-title">Your Cart</span>
@@ -31,8 +26,6 @@ export default function CartModal({ onClose }) {
           </div>
           <button className="cm-close" onClick={onClose} aria-label="Close cart">✕</button>
         </div>
-
-        {/* Body */}
         {items.length === 0 ? (
           <div className="cm-empty">
             <span className="cm-empty-icon">🛍</span>
@@ -75,8 +68,7 @@ export default function CartModal({ onClose }) {
                 <span className="cm-total-label">Total</span>
                 <span className="cm-total-value">${total.toLocaleString()}</span>
               </div>
-              <button className="cm-checkout">Proceed to Checkout</button>
-              <button className="cm-clear" onClick={() => dispatch(clearCart())}>
+              <button className="cm-checkout" onClick={() => dispatch(clearCart())}>
                 Clear Cart
               </button>
             </div>

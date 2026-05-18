@@ -6,8 +6,6 @@ export default function Hero() {
 
   return (
     <section className="hero">
-
-      {/* 🎥 Video Background */}
       <video
         className="hero-video"
         autoPlay
@@ -20,34 +18,23 @@ export default function Hero() {
         Your browser does not support the video tag.
       </video>
 
-      {/* Dark overlay for readability */}
       <div className="overlay"></div>
 
       {/* Content */}
       <div className="hero-content">
         <h1>Elevate Your Everyday Shopping</h1>
-
-        <p>
-          Discover premium products designed for the modern consumer.
-        </p>
+        <p>Discover premium products designed for the modern consumer.</p>
 
         <div className="hero-buttons">
-          <button
-            className="primary-btn"
-            onClick={() => navigate("/login")}
-          >
+          <button className="primary-btn" onClick={() => navigate("/login")}>
             Sign Up To Explore Products
           </button>
 
-          <button
-            className="secondary-btn"
-            onClick={() => navigate("/about")}
-          >
+          <button className="secondary-btn" onClick={() => navigate("/about")}>
             Our Story
           </button>
         </div>
       </div>
-
     </section>
   );
 }

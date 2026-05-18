@@ -2,17 +2,21 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchEvents } from "../../util/http.js";
 import "./SearchBar.css";
+import { useTranslation } from "react-i18next";
+import { BASE_URL } from "../../config";
 
 export default function SearchBar() {
-  const navigate                      = useNavigate();
-  const [query, setQuery]             = useState("");
-  const [results, setResults]         = useState([]);
-  const [isOpen, setIsOpen]           = useState(false);
-  const [isLoading, setIsLoading]     = useState(false);
-  const [activeIdx, setActiveIdx]     = useState(-1); // keyboard nav
-  const debounceTimer                 = useRef(null);
-  const wrapperRef                    = useRef(null);
-  const abortRef                      = useRef(null);  // abort stale fetches
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [activeIdx, setActiveIdx] = useState(-1); // keyboard nav
+  const debounceTimer = useRef(null);
+  const wrapperRef = useRef(null);
+  const abortRef = useRef(null); // abort stale fetches
+
+  const { t } = useTranslation();
 
   /* ── Fetch results whenever query changes (debounced 300ms) ─────────────── */
   useEffect(() => {
@@ -27,26 +31,31 @@ export default function SearchBar() {
     debounceTimer.current = setTimeout(async () => {
       // Cancel any previous in-flight request
       if (abortRef.current) abortRef.current.abort();
-      const controller   = new AbortController();
-      abortRef.current   = controller;
+      const controller = new AbortController();
+      abortRef.current = controller;
 
       setIsLoading(true);
       try {
         const data = await fetchEvents({
-          signal:     controller.signal,
+          signal: controller.signal,
           searchTerm: query.trim(),
         });
         setResults(data || []);
         setIsOpen(true);
         setActiveIdx(-1);
       } catch (err) {
-        if (err.name !== "AbortError") setResults([]);
+        if (err.name !== "AbortError") {
+          setResults([]);
+        }
       } finally {
         setIsLoading(false);
       }
     }, 300);
 
-    return () => clearTimeout(debounceTimer.current);
+    return () => {
+      clearTimeout(debounceTimer.current);
+      if (abortRef.current) abortRef.current.abort();
+    };
   }, [query]);
 
   /* ── Close dropdown when clicking outside ───────────────────────────────── */
@@ -59,6 +68,16 @@ export default function SearchBar() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  /* ── Scroll active keyboard option into view automatically ─────────────── */
+  useEffect(() => {
+    if (activeIdx >= 0 && wrapperRef.current) {
+      const activeEl = wrapperRef.current.querySelector(".sb-result.active");
+      if (activeEl) {
+        activeEl.scrollIntoView({ block: "nearest" });
+      }
+    }
+  }, [activeIdx]);
 
   /* ── Navigate to product detail on result click ─────────────────────────── */
   function handleSelect(productId) {
@@ -85,7 +104,7 @@ export default function SearchBar() {
     }
   }
 
-  const IMAGE_BASE = "http://localhost:5000/";
+  const IMAGE_BASE = BASE_URL;
 
   return (
     <div className="sb-wrap" ref={wrapperRef}>
@@ -108,7 +127,7 @@ export default function SearchBar() {
         <input
           className="sb-input"
           type="text"
-          placeholder="Search products…"
+          placeholder={t("searchProducts")}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}

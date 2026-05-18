@@ -3,18 +3,20 @@ import { useNavigate } from "react-router-dom";
 import LoadingIndicator from "../UI/LoadingIndicator.jsx";
 import ErrorBlock from "../UI/ErrorBlock.jsx";
 import ProductItem from "./ProductItem.jsx";
-
 import SearchBar from "../Searchbar/Searchbar.jsx";
 import { fetchEvents } from "../../util/http.js";
 import "./ProductListingPage.css";
+import { use } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function ProductListingPage({ category }) {
   const navigate = useNavigate();
+  const {t}=useTranslation();
 
  
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ["events", { category }],
-    queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }),
+    queryKey: ["products", { category }],
+    queryFn: ({ queryKey }) => fetchEvents({ ...queryKey[1] }),
     staleTime: 15000,
   });
 
@@ -48,7 +50,7 @@ export default function ProductListingPage({ category }) {
       <div className="plp-state">
         <ErrorBlock
           title="An error occurred"
-          message={error.info?.message || "Failed to fetch events"}
+          message={error.info?.message || "Failed to fetch products"}
         />
       </div>
     );
@@ -62,9 +64,9 @@ export default function ProductListingPage({ category }) {
       </div>
     ) : (
       <ul className="plp-grid">
-        {data.map((event) => (
-          <li key={event.id}>
-            <ProductItem event={event} />
+        {data.map((product) => (
+          <li key={product.id}>
+            <ProductItem product={product} />
           </li>
         ))}
       </ul>
@@ -74,18 +76,15 @@ export default function ProductListingPage({ category }) {
   return (
     <section className="plp-section">
       <div className="plp-body">
-
-        {/* ── Heading row ────────────────────────────────────────────────── */}
         <div className="plp-heading-row">
           <div className="plp-heading-left">
             <h1 className="plp-heading">
-              All <span>Products</span>
+              {t("categories.all")} <span>{t("products")}</span>
             </h1>
             {data && (
               <span className="plp-item-count">{data.length} items</span>
             )}
           </div>
-
           <SearchBar />
         </div>
 

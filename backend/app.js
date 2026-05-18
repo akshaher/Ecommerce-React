@@ -46,9 +46,7 @@ app.post("/signup", async (req, res) => {
   }
 
   const usersFileContent = await fs.readFile("./data/users.json");
-
   const users = JSON.parse(usersFileContent);
-
   const existingUser = users.find((user) => user.email === email);
 
   if (existingUser) {
@@ -139,16 +137,9 @@ function verifyToken(req, res, next) {
   }
 }
 
-/* PROTECTED ROUTE */
-app.get("/profile", verifyToken, async (req, res) => {
-  res.json({
-    message: "Authenticated user profile",
-    user: req.user,
-  });
-});
 
 /* ===================================================
-   EVENTS ROUTES
+   products ROUTES
 =================================================== */
 
 app.get("/products", verifyToken, async (req, res) => {
@@ -156,20 +147,20 @@ app.get("/products", verifyToken, async (req, res) => {
 
   const eventsFileContent = await fs.readFile("./data/products.json");
 
-  let events = JSON.parse(eventsFileContent);
+  let products = JSON.parse(eventsFileContent);
 
   // Filter by category (skip if 'all' or not provided)
   if (category && category !== "all") {
-    events = events.filter((event) => event.category === category);
+    products = products.filter((product) => product.category === category);
   }
 
   // Filter by search term
   if (search) {
-    events = events.filter((event) => {
+    products = products.filter((product) => {
       const searchableText = `
-        ${event.title}
-        ${event.description}
-        ${event.location}
+        ${product.title}
+        ${product.description}
+        ${product.location}
       `;
 
       return searchableText.toLowerCase().includes(search.toLowerCase());
@@ -177,14 +168,14 @@ app.get("/products", verifyToken, async (req, res) => {
   }
 
   res.json({
-    events: events.map((event) => ({
-      id: event.id,
-      title: event.title,
-      image: event.images,
-      badge: event.badge,
-      price: event.price,
-      category: event.category,
-      description: event.description,
+    products: products.map((product) => ({
+      id: product.id,
+      title: product.title,
+      image: product.images,
+      badge: product.badge,
+      price: product.price,
+      category: product.category,
+      description: product.description,
     })),
   });
 });
@@ -211,42 +202,42 @@ app.get("/products/:id", verifyToken, async (req, res) => {
 
   const eventsFileContent = await fs.readFile("./data/products.json");
 
-  const events = JSON.parse(eventsFileContent);
+  const products = JSON.parse(eventsFileContent);
 
-  const event = events.find((event) => event.id === id);
+  const product = products.find((product) => product.id === id);
 
-  if (!event) {
+  if (!product) {
     return res.status(404).json({
-      message: `For the id ${id}, no event could be found.`,
+      message: `For the id ${id}, no product could be found.`,
     });
   }
 
   // Attach isFavorite based on the logged-in user's favorites list
   const favorites = await readFavorites();
   const userFavs = favorites[req.user.email] || [];
-  event.isFavorite = userFavs.includes(id);
+  product.isFavorite = userFavs.includes(id);
 
   setTimeout(() => {
-    res.json({ event });
+    res.json({ product });
   }, 1000);
 });
 
 app.post("/products", async (req, res) => {
-  const { event } = req.body;
+  const { product } = req.body;
 
-  if (!event) {
+  if (!product) {
     return res.status(400).json({
-      message: "Event is required",
+      message: "product is required",
     });
   }
 
   if (
-    !event.title?.trim() ||
-    !event.description?.trim() ||
-    !event.date?.trim() ||
-    !event.time?.trim() ||
-    !event.image?.trim() ||
-    !event.location?.trim()
+    !product.title?.trim() ||
+    !product.description?.trim() ||
+    !product.date?.trim() ||
+    !product.time?.trim() ||
+    !product.image?.trim() ||
+    !product.location?.trim()
   ) {
     return res.status(400).json({
       message: "Invalid data provided.",
@@ -255,19 +246,19 @@ app.post("/products", async (req, res) => {
 
   const eventsFileContent = await fs.readFile("./data/products.json");
 
-  const events = JSON.parse(eventsFileContent);
+  const products = JSON.parse(eventsFileContent);
 
   const newEvent = {
     id: Math.round(Math.random() * 10000).toString(),
 
-    ...event,
+    ...product,
   };
 
-  events.push(newEvent);
+  products.push(newEvent);
 
-  await fs.writeFile("./data/products.json", JSON.stringify(events));
+  await fs.writeFile("./data/products.json", JSON.stringify(products));
 
-  res.json({ event: newEvent });
+  res.json({ product: newEvent });
 });
 
 /* ===================================================

@@ -13,31 +13,19 @@ const TRUST_BADGES = [
 ];
 
 export default function ProductDetail({ data }) {
-//   To dispatch the reducer action for AddToCart
-    const dispatch = useDispatch();
-
-//   
-  const [heroIdx, setHeroIdx] = useState(0);
-
-//   To handle the "Add To Cart" button state
+  //   To dispatch the reducer action for AddToCart
+  const dispatch = useDispatch();
+  //
+  const [productIdx, setProductIdx] = useState(0);
   const [added, setAdded] = useState(false);
-
-  /* ─────────────────────────────────────────────
-       SAFE INITIAL STATE
-    ───────────────────────────────────────────── */
-
   const [favorite, setFavorite] = useState(data?.isFavorite || false);
-
   const [optimisticFavorite, toggleFavorite] = useOptimistic(
     favorite,
     (current) => !current,
   );
 
-  /* ─────────────────────────────────────────────
-       FETCH FAVORITE STATUS WHEN PAGE LOADS
-    ───────────────────────────────────────────── */
-//  To get the isFavorite state from server to ad the symbol accordingly else will fall in error.
-//  When product Id gets changed then it will call the GET method
+  //  To get the isFavorite state from server to add the symbol accordingly else will fall in error.
+  //  When product Id gets changed then it will call the GET method
   useEffect(() => {
     if (!data?.id) return;
 
@@ -74,19 +62,12 @@ export default function ProductDetail({ data }) {
     loadFavorites();
   }, [data?.id]);
 
-  /* ─────────────────────────────────────────────
-       CONDITIONAL RETURN
-    ───────────────────────────────────────────── */
 
   if (!data) return null;
 
   const { id, title, price, description, badge, images = [] } = data;
 
   const imageUrls = images.map((src) => `${IMAGE_BASE_URL}${src}`);
-
-  /* ─────────────────────────────────────────────
-       ADD TO CART
-    ───────────────────────────────────────────── */
 
   function handleAddToCart() {
     if (added) return;
@@ -101,7 +82,6 @@ export default function ProductDetail({ data }) {
     );
     setAdded(true);
   }
-
 
   async function handleFavorite() {
     toggleFavorite();
@@ -147,13 +127,12 @@ export default function ProductDetail({ data }) {
   return (
     <article className="pd-root" id="product-details">
       <div className="pd-layout">
-        {/* IMAGE */}
         <div className="pd-img-wrap">
           <div className="pd-hero-wrap">
-            {imageUrls[heroIdx] && (
+            {imageUrls[productIdx] && (
               <img
                 className="pd-main-img"
-                src={imageUrls[heroIdx]}
+                src={imageUrls[productIdx]}
                 alt={title}
               />
             )}
@@ -166,8 +145,8 @@ export default function ProductDetail({ data }) {
               {imageUrls.map((src, i) => (
                 <div
                   key={i}
-                  className={`pd-thumb ${heroIdx === i ? "active" : ""}`}
-                  onClick={() => setHeroIdx(i)}
+                  className={`pd-thumb ${productIdx === i ? "active" : ""}`}
+                  onClick={() => setProductIdx(i)}
                 >
                   <img src={src} alt={`${title} view ${i + 1}`} />
                 </div>
@@ -176,7 +155,6 @@ export default function ProductDetail({ data }) {
           )}
         </div>
 
-        {/* INFO */}
         <div className="pd-info">
           <button
             className={`pd-fav-btn ${optimisticFavorite ? "active" : ""}`}
@@ -188,18 +166,14 @@ export default function ProductDetail({ data }) {
           {badge && <div className="pd-badge">{badge}</div>}
 
           <h1 className="pd-title">{title}</h1>
-
           <div className="pd-price">${price}</div>
-
           <p className="pd-desc">{description}</p>
-
           <button
             className={`pd-btn-cart ${added ? "added" : "idle"}`}
             onClick={handleAddToCart}
           >
             {added ? "✓ Added to Cart" : "Add to Cart"}
           </button>
-
           <div className="pd-badges">
             {TRUST_BADGES.map((b, i) => (
               <div key={i} className="pd-trust">

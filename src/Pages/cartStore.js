@@ -1,21 +1,19 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 
-const API_BASE = "http://localhost:5000";
+const API_URL = "http://localhost:5000";
 
-// ── Helper: get JWT token from localStorage ───────────────────────────────────
 function getToken() {
-  return localStorage.getItem("token");  // set this when user logs in
+  return localStorage.getItem("token"); 
 }
 
-// ── Helper: sync current cart state to backend ────────────────────────────────
-// Called after every mutation (add / remove / clear).
-// Silent — never throws, so UI never breaks if request fails.
+
+//call this function after any dispatch which modofies the cart items.
 async function syncCartToServer(cartState) {
   const token = getToken();
   if (!token) return;
 
   try {
-    await fetch(`${API_BASE}/cart`, {
+    await fetch(`${API_URL}/cart`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +26,6 @@ async function syncCartToServer(cartState) {
   }
 }
 
-// ── Slice ─────────────────────────────────────────────────────────────────────
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
@@ -48,7 +45,7 @@ const cartSlice = createSlice({
     },
 
     removeFromCart(state, action) {
-      const id = action.payload;
+      const id = action.payload;  
       const existing = state.items.find((i) => i.id === id);
       if (existing) {
         state.count -= existing.qty;
@@ -61,7 +58,6 @@ const cartSlice = createSlice({
       state.count = 0;
     },
 
-    // ── Used on login: load the user's cart fetched from the server
     loadCart(state, action) {
       const { items, count } = action.payload;
       state.items = items || [];
@@ -81,29 +77,22 @@ const store = configureStore({
 
 // ── Subscribe: after every Redux mutation, sync to server ─────────────────────
 store.subscribe(() => {
+  console.log("Reducer called from observer");
+  
   syncCartToServer(store.getState().cart);
 });
 
 export default store;
 
-// ── fetchUserCart — call this right after login/token restore ─────────────────
-// Fetches the user's saved cart from the server and loads it into Redux.
-//
-// Usage in your auth flow (e.g. after login success or on app mount):
-//   import { fetchUserCart } from "./cartStore";
-//   await fetchUserCart();
-//
+
 export async function fetchUserCart() {
   const token = getToken();
   if (!token) return;
-
   try {
-    const res = await fetch(`${API_BASE}/cart`, {
+    const res = await fetch(`${API_URL}/cart`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-
     if (!res.ok) return;
-
     const { cart } = await res.json();
     store.dispatch(loadCart(cart));
   } catch {

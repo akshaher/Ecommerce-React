@@ -1,8 +1,16 @@
 {
     "categories": {
   "welcome": "स्वागत है",
-  "products": "उत्पाद",
   "loading": "लोड हो रहा है...",
-  "all" : "सभी"
-} 
+  "all" : "सभी",
+  "smartphones": "स्मार्टफोन",
+  "laptops": "लैपटॉप",
+  "headphones": "हेडफ़ोन",
+  "watches": "घड़ियाँ"
+},
+  "filter" : "श्रेणी द्वारा फ़िल्टर करें:",
+  "searchProducts": "उत्पाद खोजें...",
+    "products": "उत्पाद",
+    "logOut": "लॉग आउट"
+
 }

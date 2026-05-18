@@ -1,6 +1,13 @@
 {
     "categories" :{
-  "Filter by category": "Filter by Category",
-  "all": "All"
-}
+  "all": "All",
+  "smartphones":"SmartPhones",
+  "laptops":"Laptops",
+  "headphones":"Headphones",
+  "watches":"Watches"
+},
+  "searchProducts": "Search Products...",
+    "filter": "Filter by Category:",
+      "products":"Products",
+      "logOut": "Log Out"
 }

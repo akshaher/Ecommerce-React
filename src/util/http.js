@@ -1,7 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
 
 export const queryClient = new QueryClient();
-export async function fetchEvents({ signal, searchTerm, category }) {
+export async function fetchEvents({ searchTerm, category }) {
  
    let url = "http://localhost:5000/products";
 
@@ -14,7 +14,6 @@ export async function fetchEvents({ signal, searchTerm, category }) {
   const token = localStorage.getItem("token");
 
   const response = await fetch(url, {
-    signal,
     headers: {
       Authorization: token ? `Bearer ${token}` : "",
     },
@@ -37,8 +36,8 @@ export async function fetchEvents({ signal, searchTerm, category }) {
     throw error;
   }
 
-  const { events } = await response.json();
-  return events;
+  const { products } = await response.json();
+  return products;
 }
 
 
@@ -52,7 +51,7 @@ export async function fetchEvent({ id, signal }) {
     } });
 
   if (!response.ok) {
-    const error = new Error('An error occurred while fetching the event');
+    const error = new Error('An error occurred while fetching the product');
     error.code = response.status;
     error.message = `No Product has been found with ID: ${id}`;
     error.info = await response.json();
@@ -61,8 +60,8 @@ export async function fetchEvent({ id, signal }) {
     throw error;
   }
 
-  const { event } = await response.json();
+  const { product } = await response.json();
 
-  return event;
+  return product;
 }
 
