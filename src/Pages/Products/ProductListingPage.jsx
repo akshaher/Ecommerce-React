@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import LoadingIndicator from "../UI/LoadingIndicator.jsx";
-import ErrorBlock from "../UI/ErrorBlock.jsx";
-import ProductItem from "./ProductItem.jsx";
-import SearchBar from "../Searchbar/Searchbar.jsx";
+import LoadingIndicator from "../../components/UI/LoadingIndicator.jsx"
+import ErrorBlock from "../../components/UI/ErrorBlock.jsx"
+import ProductItem from "../../components/Product/ProductItem.jsx"
+import SearchBar from "../../components/Search/Searchbar.jsx"
 import { fetchEvents } from "../../util/http.js";
 import "./ProductListingPage.css";
 import { use } from "react";

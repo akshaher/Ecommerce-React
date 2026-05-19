@@ -7,11 +7,11 @@ import { useEffect } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./util/http.js";
 import HomeLayout from "./Pages/HomeLayout.jsx";
-import Login from "./components/Login.jsx";
-import LogoutModal from "./components/Logout.jsx";
-import About from "./components/About.jsx";
-import { fetchUserCart } from "./Pages/cartStore.js";
-import AllProducts from "./components/Products/AllProducts.jsx";
+import Login from "./pages/Login/Login.jsx";
+import LogoutModal from "./components/layout/Logout.jsx";
+import About from "./pages/About/About.jsx";
+import {fetchUserCart} from "./store/cartStore.js";
+import AllProducts from "./pages/AllProducts/AllProducts.jsx"
 import NotFound from "./components/UI/NotFound.jsx";
 
 const router = createBrowserRouter([
@@ -39,14 +39,14 @@ element: <AllProducts/>
   {
     path: "/products",
     lazy: async() => {
-      const module=await import("./components/Products/Products.jsx");
+      const module=await import("./pages/Products/Products.jsx");
      return {Component: module.default};
     }
   },
   {
     path: "/products/:id",
     lazy: async()=>{
-      const module = await import("./components/Products/ProductDetails.jsx");
+      const module = await import("./pages/ProductDetails/ProductDetails.jsx");
       return {Component : module.default}
     }
   },

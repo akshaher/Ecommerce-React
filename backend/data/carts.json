@@ -2,13 +2,6 @@
   "aa@bts.com": {
     "items": [
       {
-        "id": "p2",
-        "title": "Samsung Galaxy S24 Ultra",
-        "price": 1399,
-        "image": "http://localhost:5000/samsung-s241.jpg",
-        "qty": 4
-      },
-      {
         "id": "p4",
         "title": "Dell XPS 15 Laptop",
         "price": 2199,
@@ -35,9 +28,16 @@
         "price": 2499,
         "image": "http://localhost:5000/macbook-pro1.jpg",
         "qty": 2
+      },
+      {
+        "id": "p7",
+        "title": "Apple iPhone 15 Pro",
+        "price": 1599,
+        "image": "http://localhost:5000/iphone-15-pro1.jpg",
+        "qty": 1
       }
     ],
-    "count": 9
+    "count": 6
   },
   "akshay@bts.com": {
     "items": [

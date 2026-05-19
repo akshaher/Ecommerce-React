@@ -4,13 +4,13 @@ import {
   useParams,
 } from "react-router-dom";
 
-import Header from "../Header.jsx";
+import Header from "../../components/layout/Header.jsx"
 import {  useQuery } from "@tanstack/react-query";
 import { fetchEvent } from "../../util/http.js";
-import ProductDetail from "../ProductDetail.jsx";
-import CartIcon from "../CartIcon.jsx";
-import LoadingIndicator from "../UI/LoadingIndicator.jsx";
-import ErrorBlock from "../UI/ErrorBlock.jsx";
+import ProductDetail from "../../components/Product/ProductDetail.jsx";
+import CartIcon from "../../components/cart/CartIcon.jsx";
+import LoadingIndicator from "../../components/UI/LoadingIndicator.jsx";
+import ErrorBlock from "../../components/UI/ErrorBlock.jsx"
 
 export default function ProductDetails() {
 

@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import "./login.css";
-import { fetchUserCart } from "../Pages/cartStore";
+import { fetchUserCart } from "../../store/cartStore";
 
 const BASE_URL = "http://localhost:5000/";
 
 function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-
 
   const navigate = useNavigate();
 
@@ -32,6 +30,7 @@ function Login() {
     e.preventDefault();
 
     setErrorMessage("");
+
     const url = isLogin ? BASE_URL + "login" : BASE_URL + "signup";
 
     try {
@@ -44,7 +43,6 @@ function Login() {
       });
 
       const data = await response.json();
-      
 
       if (!response.ok) {
         setErrorMessage(
@@ -57,6 +55,7 @@ function Login() {
       navigate("/products");
     } catch (error) {
       console.log(error);
+
       setErrorMessage("Unable to connect to server. Please try again later.");
     }
   }
@@ -86,25 +85,14 @@ function Login() {
             required
           />
 
-          <div className="password-container">
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="password-input"
-            />
-
-            <button
-              type="button"
-              className="toggle-btn"
-              onClick={() => setShowPassword((prev) => !prev)}
-            >
-              {showPassword ? "Hide" : "Show"}
-            </button>
-          </div>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
 
           {errorMessage && (
             <div className="auth-error-message">{errorMessage}</div>
@@ -114,7 +102,6 @@ function Login() {
 
           <p className="toggle-text">
             {isLogin ? "Don't have an account?" : "Already have an account?"}
-
             <span
               onClick={() => {
                 setIsLogin((prev) => !prev);

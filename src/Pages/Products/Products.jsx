@@ -1,11 +1,11 @@
 import { useState } from "react";
 import ProductListingPage from "./ProductListingPage.jsx";
-import CartIcon from "../CartIcon.jsx";
+import CartIcon from "../../components/cart/CartIcon.jsx"
 import "./products.css";
-import Footer from "../Footer/Footer.jsx";
-import LogoutModal from "../Logout.jsx";
+import Footer from "../../components/layout/Footer/Footer.jsx"
+import LogoutModal from "../../components/layout/Logout.jsx"
 import {Link} from 'react-router-dom'
-import SwitchLanguage from "../SwitchLanguage.jsx";
+import SwitchLanguage from "../../components/UI/SwitchLanguage.jsx"
 import { useTranslation } from "react-i18next";
 
 const CATEGORIES = [

@@ -1,4 +1,4 @@
-import ProductsByCategory from "../ProductsByCategory";
+import ProductsByCategory from "../../components/Product/ProductsByCategory"
 import "./AllProducts.css";
 import {useEffect} from 'react'
 

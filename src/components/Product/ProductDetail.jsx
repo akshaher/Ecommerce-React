@@ -1,6 +1,6 @@
 import { useState, useOptimistic, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../Pages/cartStore";
+import { addToCart }  from "../../store/cartStore"
 import "./ProductDetail.css";
 
 const IMAGE_BASE_URL = "http://localhost:5000/";

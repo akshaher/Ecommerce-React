@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 
-import TopBar from "../components/TopBar/TopBar";
+import TopBar from "../components/layout/TopBar/TopBar";
 import Hero from "../components/Hero/Hero";
 
 // Lazy-loaded components
@@ -13,7 +13,7 @@ const Categories = lazy(() =>
 );
 
 const Footer = lazy(() =>
-  import("../components/Footer/Footer")
+  import("../components/layout/Footer/Footer")
 );
 
 export default function Home() {

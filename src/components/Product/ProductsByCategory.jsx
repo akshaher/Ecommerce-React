@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import ProductItem from "./Products/ProductItem";
-import { fetchEvents } from "../util/http";
+import ProductItem from "./ProductItem";
+import { fetchEvents } from "../../util/http";
 import "./ProductsByCategory.css";
 
 export default function ProductsByCategory({ category }) {
@@ -14,8 +14,7 @@ export default function ProductsByCategory({ category }) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-            console.log("Akshay");
-            
+
           setIsVisible(true);
         }
       },
@@ -65,7 +64,7 @@ export default function ProductsByCategory({ category }) {
       {/* PRODUCTS */}
       <div className="products-row">
         {(Array.isArray(data) ? data : []).map((product) => (
-          <ProductItem key={product.id} event={product} />
+          <ProductItem key={product.id} product={product} />
         ))}
       </div>
     </div>

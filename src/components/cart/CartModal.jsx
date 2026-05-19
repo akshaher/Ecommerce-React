@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { createPortal } from "react-dom";
-import { removeFromCart, clearCart } from "../Pages/cartStore";
+import { removeFromCart, clearCart } from "../../store/cartStore";
 import "./CartModal.css";
 
 export default function CartModal({ onClose }) {

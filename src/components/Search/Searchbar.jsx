@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchEvents } from "../../util/http.js";
 import "./SearchBar.css";
 import { useTranslation } from "react-i18next";
-import { BASE_URL } from "../../config";
+import { BASE_URL } from "../../config.js";
 
 export default function SearchBar() {
   const navigate = useNavigate();
