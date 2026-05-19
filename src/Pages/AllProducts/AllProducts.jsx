@@ -3,7 +3,7 @@ import "./AllProducts.css";
 import {useEffect} from 'react'
 
 export default function AllProducts() {
-  const categories = ["laptops", "smartphones", "watches", "headphones"];
+  const categories = ["shoes","laptops", "smartphones", "watches", "headphones"];
 
   useEffect(() => {
   window.scrollTo({

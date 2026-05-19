@@ -35,9 +35,16 @@
         "price": 1599,
         "image": "http://localhost:5000/iphone-15-pro1.jpg",
         "qty": 1
+      },
+      {
+        "id": "p2",
+        "title": "Samsung Galaxy S24 Ultra",
+        "price": 1399,
+        "image": "http://localhost:5000/samsung-s241.jpg",
+        "qty": 2
       }
     ],
-    "count": 6
+    "count": 8
   },
   "akshay@bts.com": {
     "items": [

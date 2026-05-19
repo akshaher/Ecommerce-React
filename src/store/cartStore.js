@@ -22,7 +22,7 @@ async function syncCartToServer(cartState) {
       body: JSON.stringify({ cart: cartState }),
     });
   } catch {
-    // network error — cart state is still correct in Redux, just not persisted
+    
   }
 }
 
@@ -34,6 +34,8 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart(state, action) {
+   
+      
       const product = action.payload;
       const existing = state.items.find((i) => i.id === product.id);
       if (existing) {
@@ -59,7 +61,7 @@ const cartSlice = createSlice({
     },
 
     loadCart(state, action) {
-      const { items, count } = action.payload;
+      const { items, count } = action.payload;      
       state.items = items || [];
       state.count = count || 0;
     },
@@ -75,7 +77,6 @@ const store = configureStore({
   },
 });
 
-// ── Subscribe: after every Redux mutation, sync to server ─────────────────────
 store.subscribe(() => {
   console.log("Reducer called from observer");
   
@@ -83,7 +84,6 @@ store.subscribe(() => {
 });
 
 export default store;
-
 
 export async function fetchUserCart() {
   const token = getToken();

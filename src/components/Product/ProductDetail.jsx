@@ -13,9 +13,8 @@ const TRUST_BADGES = [
 ];
 
 export default function ProductDetail({ data }) {
-  //   To dispatch the reducer action for AddToCart
   const dispatch = useDispatch();
-  //
+
   const [productIdx, setProductIdx] = useState(0);
   const [added, setAdded] = useState(false);
   const [favorite, setFavorite] = useState(data?.isFavorite || false);
@@ -24,14 +23,10 @@ export default function ProductDetail({ data }) {
     (current) => !current,
   );
 
-  //  To get the isFavorite state from server to add the symbol accordingly else will fall in error.
-  //  When product Id gets changed then it will call the GET method
   useEffect(() => {
     if (!data?.id) return;
-
     async function loadFavorites() {
       const token = localStorage.getItem("token");
-
       try {
         const res = await fetch(`${IMAGE_BASE_URL}products/favorites`, {
           headers: {
@@ -90,13 +85,10 @@ export default function ProductDetail({ data }) {
     try {
       const res = await fetch(`${IMAGE_BASE_URL}products/favorites`, {
         method: "POST",
-
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
-
           "Content-Type": "application/json",
         },
-
         body: JSON.stringify({
           productId: id,
         }),
@@ -107,19 +99,9 @@ export default function ProductDetail({ data }) {
       }
 
       const result = await res.json();
-
-      /*
-              Sync REAL backend state
-            */
-
       setFavorite(result.isFavorite);
     } catch (err) {
       console.log("Favorite update failed:", err);
-
-      /*
-              Rollback if API fails
-            */
-
       setFavorite((prev) => !prev);
     }
   }

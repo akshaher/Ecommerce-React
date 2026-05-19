@@ -55,7 +55,6 @@ export async function fetchEvent({ id, signal }) {
     error.code = response.status;
     error.message = `No Product has been found with ID: ${id}`;
     error.info = await response.json();
-    console.log(error, response);
     
     throw error;
   }

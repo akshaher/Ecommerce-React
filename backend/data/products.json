@@ -253,5 +253,65 @@
       "xiaomi-154.jpg"
     ],
     "isFavorite": false
+  },
+  {
+    "id": "s1",
+    "title": "Nike Air Max Pulse",
+    "badge": "Trending",
+    "price": 199,
+    "category": "shoes",
+    "description": "Comfortable and stylish Nike sneakers with responsive cushioning and breathable mesh design.",
+    "images": [
+      "nike-airmax1.jpg",
+      "nike-airmax2.jpg",
+      "nike-airmax3.jpg",
+      "nike-airmax4.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "s2",
+    "title": "Adidas Ultraboost 24",
+    "badge": "Best Seller",
+    "price": 229,
+    "category": "shoes",
+    "description": "High-performance running shoes with Boost cushioning technology for superior comfort and energy return.",
+    "images": [
+      "adidas-ultraboost1.jpg",
+      "adidas-ultraboost2.jpg",
+      "adidas-ultraboost3.jpg",
+      "adidas-ultraboost4.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "s3",
+    "title": "Puma RS-X Sneakers",
+    "badge": "New Arrival",
+    "price": 179,
+    "category": "shoes",
+    "description": "Chunky retro-inspired sneakers with bold styling and lightweight comfort for everyday wear.",
+    "images": [
+      "puma-rsx1.jpg",
+      "puma-rsx2.jpg",
+      "puma-rsx3.jpg",
+      "puma-rsx4.jpg"
+    ],
+    "isFavorite": false
+  },
+  {
+    "id": "s4",
+    "title": "New Balance 9060",
+    "badge": "Limited Edition",
+    "price": 249,
+    "category": "shoes",
+    "description": "Premium lifestyle sneakers combining modern cushioning technology with classic New Balance aesthetics.",
+    "images": [
+      "newbalance-90601.jpg",
+      "newbalance-90602.jpg",
+      "newbalance-90603.jpg",
+      "newbalance-90604.jpg"
+    ],
+    "isFavorite": false
   }
 ]

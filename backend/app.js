@@ -31,11 +31,6 @@ app.use((req, res, next) => {
   next();
 });
 
-/* ===================================================
-   AUTHENTICATION ROUTES
-=================================================== */
-
-/* SIGNUP */
 app.post("/signup", async (req, res) => {
   const { email, password } = req.body;
 
@@ -76,7 +71,7 @@ app.post("/signup", async (req, res) => {
   });
 });
 
-/* LOGIN */
+
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -112,7 +107,6 @@ app.post("/login", async (req, res) => {
   });
 });
 
-/* JWT VERIFY MIDDLEWARE */
 function verifyToken(req, res, next) {
   const authHeader = req.headers.authorization;
 
@@ -138,9 +132,6 @@ function verifyToken(req, res, next) {
 }
 
 
-/* ===================================================
-   products ROUTES
-=================================================== */
 
 app.get("/products", verifyToken, async (req, res) => {
   const { search, category } = req.query;
@@ -149,7 +140,7 @@ app.get("/products", verifyToken, async (req, res) => {
 
   let products = JSON.parse(eventsFileContent);
 
-  // Filter by category (skip if 'all' or not provided)
+  // Filter by category (skip if 'all' )
   if (category && category !== "all") {
     products = products.filter((product) => product.category === category);
   }
@@ -180,7 +171,6 @@ app.get("/products", verifyToken, async (req, res) => {
   });
 });
 
-/* GET /products/favorites — get all favorited product ids for logged-in user */
 app.get("/products/favorites", verifyToken, async (req, res) => {
   const favorites = await readFavorites();
   const userFavorites = favorites[req.user.email] || [];
@@ -222,13 +212,6 @@ app.get("/products/:id", verifyToken, async (req, res) => {
   }, 1000);
 });
 
-/* ===================================================
-   FAVORITES ROUTES  (user-specific, JWT protected)
-   Persists to ./data/favorites.json
-   Schema: { "email@x.com": ["p1", "p3", ...] }
-=================================================== */
-
-/* Helper — read favorites file */
 async function readFavorites() {
   try {
     const raw = await fs.readFile("./data/favorites.json");
@@ -288,14 +271,13 @@ async function writeCarts(carts) {
   await fs.writeFile("./data/carts.json", JSON.stringify(carts, null, 2));
 }
 
-/* GET /cart — fetch the logged-in user's cart */
+
 app.get("/cart", verifyToken, async (req, res) => {
   const carts = await readCarts();
   const userCart = carts[req.user.email] || { items: [], count: 0 };
   res.json({ cart: userCart });
 });
 
-/* POST /cart — save / replace the logged-in user's full cart */
 app.post("/cart", verifyToken, async (req, res) => {
   const { cart } = req.body;
 
@@ -310,7 +292,6 @@ app.post("/cart", verifyToken, async (req, res) => {
   res.json({ message: "Cart saved", cart });
 });
 
-/* DELETE /cart — clear the logged-in user's cart */
 app.delete("/cart", verifyToken, async (req, res) => {
   const carts = await readCarts();
   carts[req.user.email] = { items: [], count: 0 };
@@ -318,7 +299,6 @@ app.delete("/cart", verifyToken, async (req, res) => {
   res.json({ message: "Cart cleared" });
 });
 
-/* SERVER */
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });
