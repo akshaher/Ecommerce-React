@@ -39,13 +39,6 @@ export default function ProductDetail({ data }) {
         }
 
         const result = await res.json();
-        console.log(result);
-
-        /*
-                  result.favorites example:
-                  ["p2", "p3"]
-                */
-
         const isFav = result.favorites.includes(data.id);
 
         setFavorite(isFav);
