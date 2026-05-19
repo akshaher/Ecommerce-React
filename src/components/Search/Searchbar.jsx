@@ -18,7 +18,6 @@ export default function SearchBar() {
 
   const { t } = useTranslation();
 
-  /* ── Fetch results whenever query changes (debounced 300ms) ─────────────── */
   useEffect(() => {
     if (!query.trim()) {
       setResults([]);
@@ -58,7 +57,6 @@ export default function SearchBar() {
     };
   }, [query]);
 
-  /* ── Close dropdown when clicking outside ───────────────────────────────── */
   useEffect(() => {
     function handleClickOutside(e) {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
@@ -69,7 +67,6 @@ export default function SearchBar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  /* ── Scroll active keyboard option into view automatically ─────────────── */
   useEffect(() => {
     if (activeIdx >= 0 && wrapperRef.current) {
       const activeEl = wrapperRef.current.querySelector(".sb-result.active");
@@ -79,7 +76,7 @@ export default function SearchBar() {
     }
   }, [activeIdx]);
 
-  /* ── Navigate to product detail on result click ─────────────────────────── */
+
   function handleSelect(productId) {
     setQuery("");
     setResults([]);
@@ -87,7 +84,7 @@ export default function SearchBar() {
     navigate(`/products/${productId}`);
   }
 
-  /* ── Keyboard navigation ────────────────────────────────────────────────── */
+
   function handleKeyDown(e) {
     if (!isOpen || results.length === 0) return;
 
@@ -109,13 +106,11 @@ export default function SearchBar() {
   return (
     <div className="sb-wrap" ref={wrapperRef}>
 
-      {/* ── Input ─────────────────────────────────────────────────────────── */}
       <div className={`sb-input-wrap${isOpen && results.length ? " open" : ""}`}>
         <span className="sb-icon">
           {isLoading ? (
             <span className="sb-spinner" />
           ) : (
-            /* search svg */
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8" />
@@ -138,7 +133,6 @@ export default function SearchBar() {
           aria-autocomplete="list"
         />
 
-        {/* Clear button */}
         {query && (
           <button
             className="sb-clear"
@@ -150,7 +144,6 @@ export default function SearchBar() {
         )}
       </div>
 
-      {/* ── Dropdown results ──────────────────────────────────────────────── */}
       {isOpen && (
         <ul className="sb-dropdown" role="listbox">
           {results.length === 0 && !isLoading ? (
@@ -170,12 +163,10 @@ export default function SearchBar() {
                   onClick={() => handleSelect(product.id)}
                   onMouseEnter={() => setActiveIdx(i)}
                 >
-                  {/* Thumbnail */}
                   <div className="sb-result-img">
                     <img src={imgSrc} alt={product.title} />
                   </div>
 
-                  {/* Info */}
                   <div className="sb-result-info">
                     <span className="sb-result-title">{product.title}</span>
                     <span className="sb-result-meta">
@@ -184,7 +175,6 @@ export default function SearchBar() {
                     </span>
                   </div>
 
-                  {/* Arrow */}
                   <span className="sb-result-arrow">→</span>
                 </li>
               );

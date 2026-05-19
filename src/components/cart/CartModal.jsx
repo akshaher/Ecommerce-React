@@ -9,10 +9,6 @@ export default function CartModal({ onClose }) {
 
   const total = items.reduce((sum, item) => sum + item.price * item.qty, 0);
 
-  // createPortal renders directly into document.body, completely outside the
-  // React component tree. This means no ancestor's backdrop-filter, transform,
-  // or will-change can create a new stacking context that would break
-  // position:fixed — the panel always anchors to the true viewport edge.
   return createPortal(
     <>
       <div className="cm-backdrop" onClick={onClose} />
@@ -77,6 +73,6 @@ export default function CartModal({ onClose }) {
 
       </div>
     </>,
-    document.body   // ← mount target: always the true viewport root
+    document.body   
   );
 }

@@ -17,7 +17,7 @@ export default function ProductListingPage({ category }) {
   const { data, isPending, isError, error } = useQuery({
     queryKey: ["products", { category }],
     queryFn: ({ queryKey }) => fetchEvents({ ...queryKey[1] }),
-    staleTime: 15000,
+    staleTime: 150000,
   });
 
   function navigateToLogin() {
