@@ -1,0 +1,198 @@
+/* ── Hamburger trigger button ── */
+.hm-trigger {
+  position: relative;
+  background: transparent;
+  border: 1px solid #1e2130;
+  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  padding: 0;
+}
+
+.hm-trigger:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #4a5070;
+}
+
+/* Animated bars */
+.hm-bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #9aa0b8;
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+/* Cross animation when open */
+.hm-trigger.open .hm-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hm-trigger.open .hm-bar:nth-child(2) {
+  opacity: 0;
+}
+.hm-trigger.open .hm-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── Backdrop ── */
+.hm-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(2px);
+  z-index: 800;
+  animation: hm-fade 0.2s ease;
+}
+
+@keyframes hm-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Sidebar ── */
+.hm-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 270px;
+  background: #fff;
+  z-index: 850;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 30px rgba(0, 0, 0, 0.1);
+
+  transform: translateX(-100%);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hm-sidebar--open {
+  transform: translateX(0);
+}
+
+/* ── Sidebar header ── */
+.hm-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.hm-logo {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111;
+  letter-spacing: -0.3px;
+}
+
+.hm-sidebar-close {
+  background: #f5f5f5;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.hm-sidebar-close:hover {
+  background: #e8e8e8;
+}
+
+/* ── Nav ── */
+.hm-nav {
+  flex: 1;
+  padding: 16px 12px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.hm-nav-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #aaa;
+  margin: 0 8px 6px;
+}
+
+.hm-nav-label--mt {
+  margin-top: 20px;
+}
+
+/* Nav item — shared styles for <a> and <button> */
+.hm-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #222;
+  text-decoration: none;
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+.hm-nav-item:hover {
+  background: #f5f5f5;
+}
+
+/* Reset button styles */
+.hm-nav-item--btn {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+}
+
+.hm-nav-icon {
+  font-size: 1.1rem;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ── Footer ── */
+.hm-sidebar-footer {
+  padding: 16px 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.hm-logout {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 10px;
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #e55;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.hm-logout:hover {
+  background: #fff0f0;
+}
