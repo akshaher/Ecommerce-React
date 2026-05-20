@@ -5,8 +5,8 @@ import "./CartIcon.css";
 
 export default function CartIcon() {
   const count = useSelector((state) => state.cart.count);
-  const [open, setOpen]  = useState(false);
-  
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <button

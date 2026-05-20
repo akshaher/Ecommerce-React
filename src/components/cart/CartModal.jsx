@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { createPortal } from "react-dom";
+import { useMemo, useState } from "react";
 import { removeFromCart, clearCart } from "../../store/cartStore";
 import "./CartModal.css";
 
@@ -7,7 +8,10 @@ export default function CartModal({ onClose }) {
   const dispatch = useDispatch();
   const { items, count } = useSelector((state) => state.cart);
 
-  const total = items.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+  const total = useMemo(() => {
+    return items.reduce((sum, item) => sum + item.price * item.qty, 0);
+  }, [items]);
 
   return createPortal(
     <>
@@ -20,6 +24,8 @@ export default function CartModal({ onClose }) {
               <span className="cm-count">{count} {count === 1 ? "item" : "items"}</span>
             )}
           </div>
+
+
           <button className="cm-close" onClick={onClose} aria-label="Close cart">✕</button>
         </div>
         {items.length === 0 ? (
@@ -73,6 +79,6 @@ export default function CartModal({ onClose }) {
 
       </div>
     </>,
-    document.body   
+    document.body
   );
 }

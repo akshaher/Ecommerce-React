@@ -4,9 +4,10 @@ import CartIcon from "../../components/cart/CartIcon.jsx"
 import "./products.css";
 import Footer from "../../components/layout/Footer/Footer.jsx"
 import LogoutModal from "../../components/layout/Logout.jsx"
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import SwitchLanguage from "../../components/UI/SwitchLanguage.jsx"
 import { useTranslation } from "react-i18next";
+import HamburgerMenu from "../../components/layout/Hamburger/Hamburger.jsx";
 
 const CATEGORIES = [
   { value: "all", label: "categories.all", icon: "🛍" },
@@ -19,7 +20,8 @@ const CATEGORIES = [
 export default function Products() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const {t} =useTranslation();
+  const { t } = useTranslation();
+  const username = localStorage.getItem("username");
 
   return (
     <>
@@ -30,14 +32,14 @@ export default function Products() {
       <main>
         <div className="category-bar">
           <div className="category-left">
+            <HamburgerMenu />
             <span className="category-bar-label">{t("filter")}</span>
             <div className="category-bar-inner">
               {CATEGORIES.map((cat) => (
                 <label
                   key={cat.value}
-                  className={`category-pill${
-                    activeCategory === cat.value ? " active" : ""
-                  }`}
+                  className={`category-pill${activeCategory === cat.value ? " active" : ""
+                    }`}
                 >
                   <input
                     type="radio"
@@ -55,7 +57,9 @@ export default function Products() {
 
           <div className="navTabs">
             <div className="nav-actions">
-              <SwitchLanguage/>
+              {username && <span className="plp-username">Hi, {username}</span>}
+
+              <SwitchLanguage />
               <button
                 className="plp-logout-btn"
                 onClick={() => {

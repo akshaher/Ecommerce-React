@@ -32,13 +32,7 @@ app.use((req, res, next) => {
 });
 
 app.post("/signup", async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email?.trim() || !password?.trim()) {
-    return res.status(400).json({
-      message: "Email and password required",
-    });
-  }
+  const { email, password, username } = req.body;
 
   const usersFileContent = await fs.readFile("./data/users.json");
   const users = JSON.parse(usersFileContent);
@@ -55,6 +49,7 @@ app.post("/signup", async (req, res) => {
   const newUser = {
     id: Math.random().toString(),
     email,
+    username,
     password: hashedPassword,
   };
 
@@ -68,6 +63,7 @@ app.post("/signup", async (req, res) => {
     message: "Signup successful",
     token,
     email,
+    username
   });
 });
 
@@ -104,6 +100,7 @@ app.post("/login", async (req, res) => {
     message: "Login successful",
     token,
     email,
+    username: existingUser.username
   });
 });
 

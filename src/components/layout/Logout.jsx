@@ -27,6 +27,7 @@ export default function LogoutModal({ isOpen, onClose }) {
   const handleLogout = () => {
     // clear auth data (if any)
     localStorage.removeItem("token");
+    localStorage.removeItem("username");
 
     onClose();
     navigate("/");

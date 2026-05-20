@@ -10,49 +10,61 @@ import HomeLayout from "./Pages/HomeLayout.jsx";
 import Login from "./pages/Login/Login.jsx";
 import LogoutModal from "./components/layout/Logout.jsx";
 import About from "./pages/About/About.jsx";
-import {fetchUserCart} from "./store/cartStore.js";
+import { fetchUserCart } from "./store/cartStore.js";
 import AllProducts from "./pages/AllProducts/AllProducts.jsx"
 import NotFound from "./components/UI/NotFound.jsx";
+import WishlistPage from "./pages/WishlistModal/WishlistModal.jsx";
+import ProtectedRoute from "./components/layout/ProtectedRoute.jsx";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Navigate to="/home" />,
-  },
+  { path: "/login", element: <Login /> },
   {
     path: "/home",
     element: <HomeLayout />,
   },
-  { path: "/login", element: <Login /> },
   {
-    path: "/logout",
-    element: <LogoutModal />,
+    path: "/",
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: "/",
+        element: <Navigate to="/home" />,
+      },
+      {
+        path: "/logout",
+        element: <LogoutModal />,
+      },
+      {
+        path: "/allProducts",
+        element: <AllProducts />
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+      {
+        path: "wishlist",
+        element: <WishlistPage />
+      },
+      {
+        path: "/products",
+        lazy: async () => {
+          const module = await import("./pages/Products/Products.jsx");
+          return { Component: module.default };
+        }
+      },
+      {
+        path: "/products/:id",
+        lazy: async () => {
+          const module = await import("./pages/ProductDetails/ProductDetails.jsx");
+          return { Component: module.default }
+        }
+      }
+    ]
   },
   {
-path: "/allProducts",
-element: <AllProducts/>
-  },
-  {
-    path: "about",
-    element: <About />,
-  },
-  {
-    path: "/products",
-    lazy: async() => {
-      const module=await import("./pages/Products/Products.jsx");
-     return {Component: module.default};
-    }
-  },
-  {
-    path: "/products/:id",
-    lazy: async()=>{
-      const module = await import("./pages/ProductDetails/ProductDetails.jsx");
-      return {Component : module.default}
-    }
-  },
-  {
-    path:"*",
-    element: <NotFound/>
+    path: "*",
+    element: <NotFound />
   }
 ]);
 
@@ -63,7 +75,7 @@ function App() {
       fetchUserCart();
     }
   }, []);
- 
+
 
   return (
     <QueryClientProvider client={queryClient}>

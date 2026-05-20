@@ -10,11 +10,7 @@ export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [activeIdx, setActiveIdx] = useState(-1); // keyboard nav
-  const debounceTimer = useRef(null);
   const wrapperRef = useRef(null);
-  const abortRef = useRef(null); // abort stale fetches
 
   const { t } = useTranslation();
 
@@ -25,36 +21,17 @@ export default function SearchBar() {
       return;
     }
 
-    clearTimeout(debounceTimer.current);
-
-    debounceTimer.current = setTimeout(async () => {
-      // Cancel any previous in-flight request
-      if (abortRef.current) abortRef.current.abort();
-      const controller = new AbortController();
-      abortRef.current = controller;
-
-      setIsLoading(true);
+    const timer = setTimeout(async () => {
       try {
-        const data = await fetchEvents({
-          signal: controller.signal,
-          searchTerm: query.trim(),
-        });
+        const data = await fetchEvents({ searchTerm: query.trim() });
         setResults(data || []);
         setIsOpen(true);
-        setActiveIdx(-1);
       } catch (err) {
-        if (err.name !== "AbortError") {
-          setResults([]);
-        }
-      } finally {
-        setIsLoading(false);
+        setResults([]);
       }
     }, 300);
 
-    return () => {
-      clearTimeout(debounceTimer.current);
-      if (abortRef.current) abortRef.current.abort();
-    };
+    return () => clearTimeout(timer);
   }, [query]);
 
   useEffect(() => {
@@ -67,16 +44,6 @@ export default function SearchBar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  useEffect(() => {
-    if (activeIdx >= 0 && wrapperRef.current) {
-      const activeEl = wrapperRef.current.querySelector(".sb-result.active");
-      if (activeEl) {
-        activeEl.scrollIntoView({ block: "nearest" });
-      }
-    }
-  }, [activeIdx]);
-
-
   function handleSelect(productId) {
     setQuery("");
     setResults([]);
@@ -84,39 +51,15 @@ export default function SearchBar() {
     navigate(`/products/${productId}`);
   }
 
-
-  function handleKeyDown(e) {
-    if (!isOpen || results.length === 0) return;
-
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setActiveIdx((prev) => (prev + 1) % results.length);
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setActiveIdx((prev) => (prev - 1 + results.length) % results.length);
-    } else if (e.key === "Enter" && activeIdx >= 0) {
-      handleSelect(results[activeIdx].id);
-    } else if (e.key === "Escape") {
-      setIsOpen(false);
-    }
-  }
-
-  const IMAGE_BASE = BASE_URL;
-
   return (
     <div className="sb-wrap" ref={wrapperRef}>
-
       <div className={`sb-input-wrap${isOpen && results.length ? " open" : ""}`}>
         <span className="sb-icon">
-          {isLoading ? (
-            <span className="sb-spinner" />
-          ) : (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          )}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
         </span>
 
         <input
@@ -125,19 +68,14 @@ export default function SearchBar() {
           placeholder={t("searchProducts")}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-          onFocus={() => results.length > 0 && setIsOpen(true)}
+          onFocus={() => query.trim() && setIsOpen(true)}
           autoComplete="off"
-          aria-label="Search products"
-          aria-expanded={isOpen}
-          aria-autocomplete="list"
         />
 
         {query && (
           <button
             className="sb-clear"
             onClick={() => { setQuery(""); setResults([]); setIsOpen(false); }}
-            aria-label="Clear search"
           >
             ✕
           </button>
@@ -145,23 +83,20 @@ export default function SearchBar() {
       </div>
 
       {isOpen && (
-        <ul className="sb-dropdown" role="listbox">
-          {results.length === 0 && !isLoading ? (
+        <ul className="sb-dropdown">
+          {results.length === 0 ? (
             <li className="sb-no-results">No products found</li>
           ) : (
-            results.map((product, i) => {
+            results.map((product) => {
               const imgSrc = Array.isArray(product.image)
-                ? `${IMAGE_BASE}${product.image[0]}`
-                : `${IMAGE_BASE}${product.image}`;
+                ? `${BASE_URL}${product.image[0]}`
+                : `${BASE_URL}${product.image}`;
 
               return (
                 <li
                   key={product.id}
-                  className={`sb-result${activeIdx === i ? " active" : ""}`}
-                  role="option"
-                  aria-selected={activeIdx === i}
+                  className="sb-result"
                   onClick={() => handleSelect(product.id)}
-                  onMouseEnter={() => setActiveIdx(i)}
                 >
                   <div className="sb-result-img">
                     <img src={imgSrc} alt={product.title} />
@@ -185,3 +120,4 @@ export default function SearchBar() {
     </div>
   );
 }
+
