@@ -267,6 +267,17 @@
   color: #3730a3;
 }
 
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field-error {
+  color: red;
+  font-size: 0.8rem;
+}
+
 /* Keyframes */
 @keyframes spin {
   to {
