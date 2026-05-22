@@ -1,19 +1,24 @@
 import { QueryClient } from '@tanstack/react-query';
 
 export const queryClient = new QueryClient();
-export async function fetchEvents({ searchTerm, category }) {
- 
-   let url = "http://localhost:5000/products";
+export async function fetchEvents({ searchTerm, category,page }) {
+  const url = new URL("http://localhost:5000/products");
 
   if (searchTerm) {
-    url = url + "?search=" + searchTerm;
+    url.searchParams.append("search", searchTerm);
   } else if (category && category !== "all") {
-    url = url + "?category=" + category;
+    url.searchParams.append("category", category);
   }
+  
 
+  if(page){
+  url.searchParams.append("page", page);
+  url.searchParams.append("limit", 5);
+  }
+  
   const token = localStorage.getItem("token");
 
-  const response = await fetch(url, {
+  const response = await fetch(url.toString(), {
     headers: {
       Authorization: token ? `Bearer ${token}` : "",
     },
@@ -36,8 +41,8 @@ export async function fetchEvents({ searchTerm, category }) {
     throw error;
   }
 
-  const { products } = await response.json();
-  return products;
+  const data = await response.json();
+  return data;
 }
 
 
