@@ -44,6 +44,8 @@ export default function ProductsByCategory({ category }) {
     staleTime: 15000,
   });
 
+  const {products} =data;  
+
   return (
     <div ref={sectionRef} className="category-section">
       <h2 className="category-title">{category}</h2>
@@ -57,7 +59,7 @@ export default function ProductsByCategory({ category }) {
       )}
 
       <div className="products-row">
-        {(Array.isArray(data) ? data : []).map((product) => (
+        {(Array.isArray(products) ? products : []).map((product) => (
           <ProductItem key={product.id} product={product} />
         ))}
       </div>

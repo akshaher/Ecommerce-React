@@ -6,16 +6,21 @@ import ProductItem from "../../components/Product/ProductItem.jsx"
 import SearchBar from "../../components/Search/Searchbar.jsx"
 import { fetchEvents } from "../../util/http.js";
 import "./ProductListingPage.css";
-import { use } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import Pagination from "../../components/UI/Pagination.jsx";
 
 export default function ProductListingPage({ category }) {
   const navigate = useNavigate();
   const {t}=useTranslation();
+  const [page, setPage] = useState(1);
 
+  useEffect(() => {
+    setPage(1);
+  }, [category]);
  
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ["products", { category }],
+    queryKey: ["products", { category, page }],
     queryFn: ({ queryKey }) => fetchEvents({ ...queryKey[1] }),
     staleTime: 150000,
   });
@@ -57,19 +62,26 @@ export default function ProductListingPage({ category }) {
   }
 
   if (data) {
-    content = data.length === 0 ? (
+    content = data.products.length === 0 ? (
       <div className="plp-empty">
         <span className="plp-empty-icon">📭</span>
         <p>No products found in this category</p>
       </div>
     ) : (
-      <ul className="plp-grid">
-        {data.map((product) => (
-          <li key={product.id}>
-            <ProductItem product={product} />
-          </li>
-        ))}
-      </ul>
+      <>
+        <ul className="plp-grid">
+          {data.products.map((product) => (
+            <li key={product.id}>
+              <ProductItem product={product} />
+            </li>
+          ))}
+        </ul>
+        <Pagination 
+          currentPage={data.currentPage}
+          totalPages={data.totalPages}
+          onPageChange={setPage}
+        />
+      </>
     );
   }
 
@@ -82,7 +94,7 @@ export default function ProductListingPage({ category }) {
               {t("categories.all")} <span>{t("products")}</span>
             </h1>
             {data && (
-              <span className="plp-item-count">{data.length} items</span>
+              <span className="plp-item-count">{data.totalProducts} items</span>
             )}
           </div>
           <SearchBar />

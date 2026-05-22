@@ -131,7 +131,9 @@ function verifyToken(req, res, next) {
 
 
 app.get("/products", verifyToken, async (req, res) => {
-  const { search, category } = req.query;
+  const { search, category, page, limit = 5 } = req.query;
+  const pageNum = parseInt(page, 10);
+  const limitNum = parseInt(limit, 10);
 
   const eventsFileContent = await fs.readFile("./data/products.json");
 
@@ -148,15 +150,23 @@ app.get("/products", verifyToken, async (req, res) => {
       const searchableText = `
         ${product.title}
         ${product.description}
-        ${product.location}
       `;
 
       return searchableText.toLowerCase().includes(search.toLowerCase());
     });
   }
 
-  res.json({
-    products: products.map((product) => ({
+  const totalProducts = products.length;
+  const totalPages = Math.ceil(totalProducts / limitNum);
+  const startIndex = (pageNum - 1) * limitNum;
+  const endIndex = startIndex + limitNum;
+
+
+  if(page){
+  const paginatedProducts = products.slice(startIndex, endIndex);
+
+    res.json({
+    products: paginatedProducts.map((product) => ({
       id: product.id,
       title: product.title,
       image: product.images,
@@ -165,7 +175,28 @@ app.get("/products", verifyToken, async (req, res) => {
       category: product.category,
       description: product.description,
     })),
+    totalProducts,
+    totalPages,
+    currentPage: pageNum,
   });
+  }else{
+    const paginatedProducts = products;
+      res.json({
+    products: paginatedProducts.map((product) => ({
+      id: product.id,
+      title: product.title,
+      image: product.images,
+      badge: product.badge,
+      price: product.price,
+      category: product.category,
+      description: product.description,
+    }))
+  });
+  }
+
+
+
+
 });
 
 app.get("/products/favorites", verifyToken, async (req, res) => {

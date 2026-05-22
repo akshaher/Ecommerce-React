@@ -43,6 +43,7 @@
 /* ── Gallery ───────────────────────────────────────────────────────────────── */
 .pd-img-wrap {
   background: var(--surface2);
+  min-width: 0;
 }
 
 .pd-main-img {
@@ -247,4 +248,22 @@
 .pd-fav-btn:hover {
   transform: scale(1.1);
   border-color: var(--accent);
+}
+.pd-swiper {
+  width: 100%;
+}
+
+.pd-swiper .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pd-swiper .swiper-pagination {
+  bottom: 10px !important;
+}
+
+.pd-swiper .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
 }

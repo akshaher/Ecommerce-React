@@ -1,7 +1,11 @@
 import { useState, useOptimistic, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart }  from "../../store/cartStore"
+import { addToCart } from "../../store/cartStore";
 import "./ProductDetail.css";
+import {Swiper, SwiperSlide} from "swiper/react";
+import { Pagination,Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 const IMAGE_BASE_URL = "http://localhost:5000/";
 
@@ -15,6 +19,7 @@ const TRUST_BADGES = [
 export default function ProductDetail({ data }) {
   const dispatch = useDispatch();
 
+  const [swiperInstance, setSwiperInstance] = useState(null);
   const [productIdx, setProductIdx] = useState(0);
   const [added, setAdded] = useState(false);
   const [favorite, setFavorite] = useState(data?.isFavorite || false);
@@ -49,7 +54,6 @@ export default function ProductDetail({ data }) {
 
     loadFavorites();
   }, [data?.id]);
-
 
   if (!data) return null;
 
@@ -104,13 +108,32 @@ export default function ProductDetail({ data }) {
       <div className="pd-layout">
         <div className="pd-img-wrap">
           <div className="pd-hero-wrap">
-            {imageUrls[productIdx] && (
-              <img
-                className="pd-main-img"
-                src={imageUrls[productIdx]}
-                alt={title}
-              />
-            )}
+            <Swiper
+              onSwiper={setSwiperInstance}
+              modules={[Pagination, Autoplay]}
+              slidesPerView={1}
+              spaceBetween={20}
+              pagination={{ clickable: true }}
+              autoplay={{
+                delay: 1000,
+                disableOnInteraction: false,
+              }}
+              loop={true}
+              onSlideChange={(swiper) => {
+                setProductIdx(swiper.realIndex);
+              }}
+              className="pd-swiper"
+            >
+              {imageUrls.map((src, index) => (
+                <SwiperSlide key={index}>
+                  <img
+                    className="pd-main-img"
+                    src={src}
+                    alt={`${title} ${index + 1}`}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
 
             {badge && <div className="pd-new-badge">{badge}</div>}
           </div>
@@ -121,7 +144,12 @@ export default function ProductDetail({ data }) {
                 <div
                   key={i}
                   className={`pd-thumb ${productIdx === i ? "active" : ""}`}
-                  onClick={() => setProductIdx(i)}
+                  onClick={() => {
+                    setProductIdx(i);
+                    if (swiperInstance) {
+                      swiperInstance.slideToLoop(i);
+                    }
+                  }}
                 >
                   <img src={src} alt={`${title} view ${i + 1}`} />
                 </div>
