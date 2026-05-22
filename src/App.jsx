@@ -15,6 +15,7 @@ import AllProducts from "./pages/AllProducts/AllProducts.jsx"
 import NotFound from "./components/UI/NotFound.jsx";
 import WishlistPage from "./pages/WishlistModal/WishlistModal.jsx";
 import ProtectedRoute from "./components/layout/ProtectedRoute.jsx";
+import AnalyticsTracker from "./AnalyticsTracker.jsx";
 
 const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
@@ -78,9 +79,13 @@ function App() {
 
 
   return (
+
+
+
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+      <RouterProvider router={router}/>
+               </QueryClientProvider>
+    
   );
 }
 

@@ -2,5 +2,8 @@
   "aa@bts.com": [
     "p2",
     "p1"
+  ],
+  "test@bts.com": [
+    "p1"
   ]
 }

@@ -1,4 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
+import AnalyticsTracker from "../../AnalyticsTracker";
 
 export default function ProtectedRoute() {
   const token = localStorage.getItem("token");
@@ -7,5 +8,9 @@ export default function ProtectedRoute() {
     return <Navigate to="/login" replace />;
   }
 
-  return <Outlet />;
+  return(
+    <>
+    <AnalyticsTracker/>
+    <Outlet/>
+    </>)
 }

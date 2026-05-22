@@ -5,5 +5,9 @@ import './index.css';
 import  store from "./store/cartStore.js"
 import { Provider } from 'react-redux';
 import "./i18n.js";
+import { initGA } from './analytics.js';
 
-ReactDOM.createRoot(document.getElementById('root')).render(<Provider store={store}><App /></Provider>);
+
+initGA();
+ReactDOM.createRoot(document.getElementById('root')).render(
+<Provider store={store}><App /></Provider>);

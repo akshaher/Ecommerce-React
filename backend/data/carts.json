@@ -6,10 +6,17 @@
         "title": "Samsung Galaxy S24 Ultra",
         "price": 1399,
         "image": "http://localhost:5000/samsung-s241.jpg",
-        "qty": 3
+        "qty": 1
+      },
+      {
+        "id": "p3",
+        "title": "Sony Wireless Headphones",
+        "price": 399,
+        "image": "http://localhost:5000/sony-headphones1.jpg",
+        "qty": 1
       }
     ],
-    "count": 3
+    "count": 2
   },
   "akshay@bts.com": {
     "items": [
@@ -28,7 +35,15 @@
     "count": 0
   },
   "test@bts.com": {
-    "items": [],
-    "count": 0
+    "items": [
+      {
+        "id": "p1",
+        "title": "MacBook Pro M3",
+        "price": 2499,
+        "image": "http://localhost:5000/macbook-pro1.jpg",
+        "qty": 2
+      }
+    ],
+    "count": 2
   }
 }

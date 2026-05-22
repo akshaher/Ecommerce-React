@@ -27,7 +27,6 @@ export default function WishlistPage() {
 
         const result = await res.json();
 
-        // result.favorites is an array of product ids — fetch full product details
         const productRequests = result.favorites.map((id) =>
           fetch(`${BASE_URL}products/${id}`, {
             headers: {
