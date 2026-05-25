@@ -3,8 +3,10 @@ import bodyParser from "body-parser";
 import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { OAuth2Client } from "google-auth-library";
 
 const app = express();
+const client = new OAuth2Client("1042638165235-6imt3jlbbtqdmcsqrfros6uikpqdtinp.apps.googleusercontent.com");
 
 const SECRET_KEY = "ecommerce-secret-key";
 
@@ -31,77 +33,50 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/signup", async (req, res) => {
-  const { email, password, username } = req.body;
-
-  const usersFileContent = await fs.readFile("./data/users.json");
-  const users = JSON.parse(usersFileContent);
-  const existingUser = users.find((user) => user.email === email);
-
-  if (existingUser) {
-    return res.status(400).json({
-      message: "User already exists",
-    });
+app.post("/google-login", async (req, res) => {
+  const { credential } = req.body;
+  if (!credential) {
+    return res.status(400).json({ message: "No credential provided" });
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const newUser = {
-    id: Math.random().toString(),
-    email,
-    username,
-    password: hashedPassword,
-  };
-
-  users.push(newUser);
-
-  await fs.writeFile("./data/users.json", JSON.stringify(users));
-
-  const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "1h" });
-
-  res.json({
-    message: "Signup successful",
-    token,
-    email,
-    username
-  });
-});
-
-
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
-  const usersFileContent = await fs.readFile("./data/users.json");
-
-  const users = JSON.parse(usersFileContent);
-
-  const existingUser = users.find((user) => user.email === email);
-
-  if (!existingUser) {
-    return res.status(400).json({
-      message: "User not found",
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: "1042638165235-6imt3jlbbtqdmcsqrfros6uikpqdtinp.apps.googleusercontent.com",
     });
-  }
+    const payload = ticket.getPayload();
+    const email = payload.email;
+    const name = payload.name;
 
-  const isPasswordCorrect = await bcrypt.compare(
-    password,
-    existingUser.password,
-  );
+    const usersFileContent = await fs.readFile("./data/users.json");
+    const users = JSON.parse(usersFileContent);
+    let existingUser = users.find((user) => user.email === email);
 
-  if (!isPasswordCorrect) {
-    return res.status(400).json({
-      message: "Invalid password",
+    if (!existingUser) {
+      // Create user
+      const randomPassword = await bcrypt.hash(Math.random().toString(36).slice(-8), 10);
+      existingUser = {
+        id: Math.random().toString(),
+        email,
+        username: name,
+        password: randomPassword,
+      };
+      users.push(existingUser);
+      await fs.writeFile("./data/users.json", JSON.stringify(users));
+    }
+
+    const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "1h" });
+
+    res.json({
+      message: "Login successful",
+      token,
+      email: existingUser.email,
+      username: existingUser.username
     });
+  } catch (error) {
+    console.error("Google verify error:", error);
+    res.status(401).json({ message: "Invalid Google token" });
   }
-
-  const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "1h" });
-
-  res.json({
-    message: "Login successful",
-    token,
-    email,
-    username: existingUser.username
-  });
 });
 
 function verifyToken(req, res, next) {
