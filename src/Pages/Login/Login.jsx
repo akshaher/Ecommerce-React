@@ -18,7 +18,9 @@ function Login() {
         body: JSON.stringify({ credential: credentialResponse.credential }),
       });
 
-      const data = await response.json();      
+      const data = await response.json();    
+      console.log(data);
+        
 
       if (!response.ok) {
         setErrorMsg(data.message || "Google authentication failed.");
