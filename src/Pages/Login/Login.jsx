@@ -4,7 +4,7 @@ import "./login.css";
 import { fetchUserCart } from "../../store/cartStore";
 import { GoogleLogin } from '@react-oauth/google';
 
-const BASE_URL = "http://localhost:3000/";
+const BASE_URL = "http://localhost:5000/";
 
 function Login() {
   const navigate = useNavigate();
@@ -19,7 +19,6 @@ function Login() {
       });
 
       const data = await response.json();    
-      console.log(data);
         
 
       if (!response.ok) {
